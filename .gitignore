@@ -1,0 +1,7 @@
+/node_modules
+/.next/
+/out/
+/build
+public/static/*
+dist
+combined.log
