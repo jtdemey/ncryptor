@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { AppViews } from "../../data/UIConstants";
 import Header from "../Header/Header";
 import NavBar from "../Nav/NavBar";
+import SettingsGear from "../Nav/SettingsGear";
+import ViewRouter from "./ViewRouter";
 
 /*
 {"Ash Gray":"cad2c5","Dark Sea Green":"84a98c","Hookers Green":"52796f","Dark Slate Gray":"354f52","Charcoal":"2f3e46"}
@@ -21,11 +24,16 @@ const Container = styled.div`
   );
 `;
 
-const NcryptorApp = (): JSX.Element => (
-	<Container>
-		<Header />
-		<NavBar />
-	</Container>
-);
+const NcryptorApp = (): JSX.Element => {
+	const [view, setView] = React.useState(AppViews.Encrypt);
+	return (
+		<Container>
+			<Header />
+			<SettingsGear setView={setView} />
+			<ViewRouter view={view} />
+			<NavBar setView={setView} />
+		</Container>
+	);
+};
 
 export default NcryptorApp;
