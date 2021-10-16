@@ -40,7 +40,7 @@ const Container = styled.div`
   bottom: 0rem;
   overflow: hidden;
 `;
-
+/*
 const Ellipse = styled.div`
 	position: relative;
 	height: 4rem;
@@ -49,20 +49,18 @@ const Ellipse = styled.div`
 	border-radius: 50%;
 	z-index: 1;
 `;
-
+*/
 const Bar = styled.div`
 	position: relative;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  background: #2f3e46;
   padding: 0 0 1rem;
 	z-index: 2;
 `;
 
 const NavBar = ({ setView }: NavBarProps): JSX.Element => (
   <Container>
-		<Ellipse />
     <Bar>
       {navBtns.map((btn) => (
         <NavButton
