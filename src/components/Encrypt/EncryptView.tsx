@@ -3,11 +3,9 @@ import TextInput from "./TextInput";
 import SectionCard from "../Main/SectionCard";
 
 const EncryptView = (): JSX.Element => (
-	<section>
-		<SectionCard>
-			<TextInput />
-		</SectionCard>
-	</section>
+	<SectionCard>
+		<TextInput encryptMode={true} />
+	</SectionCard>
 );
 
 export default EncryptView;

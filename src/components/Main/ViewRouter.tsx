@@ -4,6 +4,7 @@ import DecryptView from "../Decrypt/DecryptView";
 import EncryptView from "../Encrypt/EncryptView";
 import SettingsView from "../Settings/SettingsView";
 import { AppViews } from "../../data/UIConstants";
+import KeychainView from "../Keychain/KeychainView";
 
 type ViewRouterProps = {
 	view: AppViews
@@ -20,6 +21,8 @@ const getView = (currentView: AppViews) => {
 			return <EncryptView />;
 		case AppViews.Decrypt:
 			return <DecryptView />;
+		case AppViews.Keychain:
+			return <KeychainView />;
 		case AppViews.Settings:
 			return <SettingsView />;
 		default:

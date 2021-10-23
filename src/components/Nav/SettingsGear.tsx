@@ -10,7 +10,7 @@ type SettingsGearProps = {
 
 const Container = styled.div`
 	position: absolute;
-	top: 1rem;
+	top: 0.65rem;
 	right: 1rem;
 `;
 

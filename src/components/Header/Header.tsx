@@ -6,6 +6,7 @@ const Banner = styled.div`
 `;
 
 const Text = styled.h1`
+	margin: 0.75rem;
 	padding-left: 1.25rem;
 	color: #CAD2C5;
 	font-family: 'Lato', sans-serif;

@@ -1,13 +1,11 @@
 import React from "react";
-import styled from 'styled-components';
-
-const View = styled.article`
-`;
+import TextInput from "../Encrypt/TextInput";
+import SectionCard from "../Main/SectionCard";
 
 const DecryptView = (): JSX.Element => (
-	<View>
-		<h1>this be the decrypt view</h1>
-	</View>
+	<SectionCard>
+		<TextInput encryptMode={false} />
+	</SectionCard>
 );
 
 export default DecryptView;
