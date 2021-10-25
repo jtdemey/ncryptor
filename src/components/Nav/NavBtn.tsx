@@ -19,7 +19,7 @@ const Btn = styled.div`
 	margin-top: 0.5rem;
 	min-height: 4rem;
 	background: #202B31;
-	box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.45);
+	box-shadow: -0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.45);
 	border-radius: 50%;
 `;
 
@@ -29,11 +29,11 @@ const Label = styled.h5`
 	font-size: 0.9rem;
 	font-weight: 100;
 	margin: auto;
-	padding-top: 0.25rem;
+	padding-top: 0.45rem;
 	text-align: center;
 `;
 
-const NavButton = ({ clickFunc, color, svgSrc, text }: NavBtnProps): JSX.Element => (
+const NavBtn = ({ clickFunc, color, svgSrc, text }: NavBtnProps): JSX.Element => (
 	<section>
 		<Btn onClick={() => clickFunc()} style={{ border: `0.15rem solid ${color}` }}>
 			<FontAwesomeIcon icon={svgSrc} color="#CAD2C5" width="1.75rem" />
@@ -42,4 +42,4 @@ const NavButton = ({ clickFunc, color, svgSrc, text }: NavBtnProps): JSX.Element
 	</section>
 );
 
-export default NavButton;
+export default NavBtn;

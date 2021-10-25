@@ -29,9 +29,9 @@ const TextArea = styled.textarea`
   min-height: 16rem;
   margin: 1rem auto 0;
   padding: 0.4rem;
-  background: #354f52;
-  border: none;
-  border-radius: 2px;
+  background: #203031;
+  border: 1px solid #84A98C;
+  box-shadow: -0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.45);
   color: #cad2c5;
   font-family: "Lora", serif;
   font-size: 1rem;
@@ -42,8 +42,8 @@ const TextInput = ({ encryptMode }: TextInputProps): JSX.Element => {
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.target.value);
   const labelText = encryptMode
-    ? "Compose a message or upload text file"
-    : "Paste encrypted text or upload encrypted text file";
+    ? "Compose a message or upload text file."
+    : "Paste encrypted text or upload encrypted text file.";
   const btnText = encryptMode ? "Encrypt" : "Decrypt";
   return (
     <Container>

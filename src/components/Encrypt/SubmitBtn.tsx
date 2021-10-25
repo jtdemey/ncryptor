@@ -9,16 +9,15 @@ export type SubmitBtnProps = {
 };
 
 const Button = styled.div`
-  width: 8rem;
+  width: calc(100% - 1rem);
   margin: 1rem auto 0;
   padding: 0.5rem;
   background: #52796f;
-  border: 1px solid #354f52;
-  border-radius: 4px;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.45);
+  border: 1px solid #52796F;
+  box-shadow: -0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.45);
   color: #cad2c5;
   font-family: "Lato", sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: bold;
   text-align: center;
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);

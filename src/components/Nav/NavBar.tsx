@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import NavButton, { NavBtnProps } from "./NavButton";
+import NavBtn, { NavBtnProps } from "./NavBtn";
 import {
   faEnvelope,
   faEnvelopeOpen,
@@ -55,7 +55,7 @@ const Bar = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  padding: 0 0 1rem;
+  padding: 0 0 0.75rem;
 	z-index: 2;
 `;
 
@@ -63,7 +63,7 @@ const NavBar = ({ setView }: NavBarProps): JSX.Element => (
   <Container>
     <Bar>
       {navBtns.map((btn) => (
-        <NavButton
+        <NavBtn
           key={btn.id}
           id={btn.id}
 					clickFunc={() => setView(btn.id)}
