@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import DecryptView from "../Decrypt/DecryptView";
 import EncryptView from "../Encrypt/EncryptView";
 import SettingsView from "../Settings/SettingsView";
-import { AppViews } from "../../data/UIConstants";
-import KeychainView from "../Keychain/KeychainView";
+import KeychainView from "../Keyring/KeyringView";
+import GenerateKeyView from "../Generate/GenerateKeyView";
+import { AppViews } from "../../data/AppViews";
 
 type ViewRouterProps = {
+	setView: Function,
 	view: AppViews
 };
 
@@ -15,25 +17,27 @@ const View = styled.div`
 	height: 100%;
 `;
 
-const getView = (currentView: AppViews) => {
+const getView = (currentView: AppViews, setView: Function) => {
 	switch(currentView) {
 		case AppViews.Encrypt:
 			return <EncryptView />;
 		case AppViews.Decrypt:
 			return <DecryptView />;
 		case AppViews.Keychain:
-			return <KeychainView />;
+			return <KeychainView setView={setView} />;
 		case AppViews.Settings:
 			return <SettingsView />;
+		case AppViews.GenerateKey:
+			return <GenerateKeyView />;
 		default:
 			return null;
 	}
 };
 
-const ViewRouter = ({ view }: ViewRouterProps): JSX.Element => {
+const ViewRouter = ({ setView, view }: ViewRouterProps): JSX.Element => {
 	return (
 		<View>
-			{getView(view)}
+			{getView(view, setView)}
 		</View>
 	);
 };

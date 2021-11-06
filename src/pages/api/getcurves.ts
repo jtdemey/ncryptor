@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { genKey } from "../../services/genKeyService";
+import { getCurves } from "../../services/getCurvesService";
 
 export const config = {
 	api: {
@@ -8,11 +8,11 @@ export const config = {
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-	if(req.method !== 'POST') {
+	if(req.method !== 'GET') {
 		return;
 	}
-	genKey(req.body.userId).then((privateKey: string) => {
-		res.status(200).json({ status: 200, key: privateKey });
+	getCurves().then((curves: string) => {
+		res.status(200).json({ status: 200, curves });
 	}).catch(err => {
 		res.status(400).json({ status: 400, text: err.toString() });
 	});

@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { AppViews } from "../../data/UIConstants";
+import { AppViews } from "../../data/AppViews";
 
 type SettingsGearProps = {
 	setView: Function

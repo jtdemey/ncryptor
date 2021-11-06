@@ -1,10 +1,10 @@
 import React from "react";
-import TextInput from "./TextInput";
+import TextAreaInput from "./TextAreaInput";
 import SectionCard from "../Main/SectionCard";
 
 const EncryptView = (): JSX.Element => (
 	<SectionCard>
-		<TextInput encryptMode={true} />
+		<TextAreaInput encryptMode={true} />
 	</SectionCard>
 );
 

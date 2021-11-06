@@ -8,7 +8,7 @@ import {
   faUserFriends,
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
-import { AppViews } from "../../data/UIConstants";
+import { AppViews } from "../../data/AppViews";
 
 type NavBarProps = {
 	setView: Function 

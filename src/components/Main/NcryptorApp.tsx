@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AppViews } from "../../data/UIConstants";
+import { AppViews } from "../../data/AppViews";
 import Header from "../Header/Header";
 import NavBar from "../Nav/NavBar";
 import SettingsGear from "../Nav/SettingsGear";
@@ -30,7 +30,7 @@ const NcryptorApp = (): JSX.Element => {
 		<Container>
 			<Header />
 			<SettingsGear setView={setView} />
-			<ViewRouter view={view} />
+			<ViewRouter setView={setView} view={view} />
 			<NavBar setView={setView} />
 		</Container>
 	);

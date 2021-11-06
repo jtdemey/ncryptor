@@ -26,7 +26,7 @@ const Label = styled.label`
 
 const TextArea = styled.textarea`
   width: calc(100% - 0.8rem - 1px);
-  min-height: 16rem;
+	height: 45vh;
   margin: 1rem auto 0;
   padding: 0.4rem;
   background: #203031;
@@ -37,7 +37,7 @@ const TextArea = styled.textarea`
   font-size: 1rem;
 `;
 
-const TextInput = ({ encryptMode }: TextInputProps): JSX.Element => {
+const TextAreaInput = ({ encryptMode }: TextInputProps): JSX.Element => {
   const [text, setText] = React.useState("");
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.target.value);
@@ -62,4 +62,4 @@ const TextInput = ({ encryptMode }: TextInputProps): JSX.Element => {
   );
 };
 
-export default TextInput;
+export default TextAreaInput;
