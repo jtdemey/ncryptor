@@ -7,8 +7,9 @@ type GenerateKeySubmitBtnProps = {
 };
 
 const Button = styled.div`
-  margin: 2rem auto 0.5rem;
-  padding: 0.5rem;
+	width: calc(100% - 1rem);
+  margin: 1rem 0.5rem 0.5rem;
+  padding: 0.5rem 0;
   background: #52796f;
   border: 1px solid #222;
   box-shadow: -3px 3px 8px #222;

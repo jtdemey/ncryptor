@@ -2,9 +2,13 @@ import React from "react";
 import SectionCard from "../Main/SectionCard";
 import GenerateKeyForm from "./GenerateKeyForm";
 
-const GenerateKeyView = (): JSX.Element => (
+type GenerateKeyViewProps = {
+	setView: Function;
+};
+
+const GenerateKeyView = ({ setView }: GenerateKeyViewProps): JSX.Element => (
 	<SectionCard>
-		<GenerateKeyForm />
+		<GenerateKeyForm setView={setView} />
 	</SectionCard>
 );
 

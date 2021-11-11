@@ -5,6 +5,7 @@ import EncryptView from "../Encrypt/EncryptView";
 import SettingsView from "../Settings/SettingsView";
 import KeychainView from "../Keyring/KeyringView";
 import GenerateKeyView from "../Generate/GenerateKeyView";
+import ContactsView from "../Contacts/ContactsView";
 import { AppViews } from "../../data/AppViews";
 
 type ViewRouterProps = {
@@ -25,10 +26,12 @@ const getView = (currentView: AppViews, setView: Function) => {
 			return <DecryptView />;
 		case AppViews.Keychain:
 			return <KeychainView setView={setView} />;
+		case AppViews.Contacts:
+			return <ContactsView />;
 		case AppViews.Settings:
 			return <SettingsView />;
 		case AppViews.GenerateKey:
-			return <GenerateKeyView />;
+			return <GenerateKeyView setView={setView} />;
 		default:
 			return null;
 	}
