@@ -9,9 +9,8 @@ export type SubmitBtnProps = {
 };
 
 const Button = styled.div`
-  width: calc(100% - 1rem);
-  margin: 1rem auto 0;
-  padding: 0.5rem;
+  margin: 1rem 0 0 auto;
+  padding: 0.5rem 1rem;
   background: #52796f;
   border: 1px solid #52796F;
   box-shadow: -0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.45);

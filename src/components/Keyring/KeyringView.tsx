@@ -1,8 +1,9 @@
 import React from "react";
+import styled from "styled-components";
 import { PrivateKeyColors } from "../../data/PrivateKeyColors";
+import LoadingIndicator from "../Main/LoadingIndicator";
 import SectionCard from "../Main/SectionCard";
 import GenerateKeyBtn from "./GenerateKeyBtn";
-import Keyring from "./Keyring";
 import NoKeysHeader from "./NoKeysHeader";
 import PrivateKeysList from "./PrivateKeysList";
 
@@ -22,6 +23,28 @@ export type PrivateKey = {
   keyType: string;
   userId: string;
 };
+
+const Container = styled.section`
+	overflow-y: scroll;
+
+	::-webkit-scrollbar {
+		width: 0.25rem;
+	}
+
+	::-webkit-scrollbar-track {
+		display: none;
+		background: #777;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: #444;
+		border-radius: 4px;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+`;
 
 const executeFetch = (): Promise<Response> =>
   fetch(`${window.location.href}api/getprivatekeys`, {
@@ -73,26 +96,36 @@ const parsePrivateKeysResponse = ({
   };
 };
 
+const getContent = (loading: boolean, keys: PrivateKey[]): JSX.Element => {
+	if (loading === true) {
+		return <LoadingIndicator />;
+	}
+	if (keys.length < 1) {
+		return <NoKeysHeader />;
+	}
+	return <PrivateKeysList privateKeys={keys} />;
+};
+
 const KeyringView = ({ setView }: KeyringViewProps): JSX.Element => {
   const initialKeys: Array<PrivateKey> = [];
+  const [loading, setLoading] = React.useState(false);
   const [keys, setKeys] = React.useState(initialKeys);
   React.useEffect(() => {
+		setLoading(true);
     executeFetch()
       .then((response: Response) => response.json())
       .then((result) => {
         setKeys(parsePrivateKeysResponse(result).keys);
+				setLoading(false);
       });
   }, []);
   return (
-    <SectionCard>
-      <GenerateKeyBtn setView={setView} />
-      <Keyring privateKeys={keys} />
-      {keys.length < 1 ? (
-        <NoKeysHeader />
-      ) : (
-        <PrivateKeysList privateKeys={keys} />
-      )}
-    </SectionCard>
+		<Container>
+			<SectionCard>
+				<GenerateKeyBtn setView={setView} />
+				{getContent(loading, keys)}
+			</SectionCard>
+		</Container>
   );
 };
 

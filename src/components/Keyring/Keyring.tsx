@@ -10,16 +10,16 @@ type KeyringProps = {
 
 const Container = styled.article`
   display: flex;
-	position: relative;
+  position: relative;
   width: 100%;
   justify-content: center;
   padding: 0.25rem;
 `;
 
 const Ring = styled.div`
-  min-width: 6rem;
-  min-height: 3rem;
-	margin-bottom: 2.5rem;
+  width: 6rem;
+  height: 3rem;
+  margin-bottom: 2.5rem;
   border: 0.5rem solid #222;
   border-radius: 0 0 6rem 6rem;
   transform: translateY(-1rem);
@@ -30,28 +30,31 @@ const KeyContainer = styled.div`
   position: absolute;
 `;
 
-const KeyXPositions: number[] = [0, 2.25, 2.25];
-
-const getXPosition = (index: number): number | string => {
-	const xPos = KeyXPositions[index];
+const getKeyAngle = (keyIndex: number, keyCount: number, subtractHalfRotation: boolean): string => {
+	const angle = 45 / keyCount;
+	return `${angle * (keyIndex + 1) - (subtractHalfRotation ? 45 : 0)}deg`;
 };
 
 const Keyring = ({ privateKeys }: KeyringProps): JSX.Element => {
   return (
     <Container>
       <Ring />
-			{privateKeys.map((privateKey: PrivateKey, i: number) => (
-				<KeyContainer style={{ top: `2.5rem` }}>
-					<FontAwesomeIcon
-						icon={faKey}
-						color={privateKey.color}
-						style={{
-							transform: `rotate(-45deg)`
-						}}
-						width="3.5rem"
-					/>
-				</KeyContainer>
-			))}
+      {privateKeys.map((privateKey: PrivateKey, i: number) => {
+        return (
+          <KeyContainer style={{ top: `0rem` }}>
+            <FontAwesomeIcon
+              icon={faKey}
+              color={privateKey.color}
+              style={{
+                transform: `rotate(${getKeyAngle(i, privateKeys.length, true)})
+									translateY(2.5rem)
+									rotate(-${getKeyAngle(i, privateKeys.length, false)})`,
+              }}
+              width="3.5rem"
+            />
+          </KeyContainer>
+        );
+      })}
     </Container>
   );
 };

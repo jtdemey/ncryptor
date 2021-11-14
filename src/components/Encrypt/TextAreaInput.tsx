@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import FileInput from "./FileInput";
 import SubmitBtn from "./SubmitBtn";
@@ -24,17 +25,24 @@ const Label = styled.label`
   line-height: 1.5rem;
 `;
 
-const TextArea = styled.textarea`
+const TextArea = styled(motion.textarea)`
   width: calc(100% - 0.8rem - 1px);
-	height: 45vh;
+  height: 48vh;
   margin: 1rem auto 0;
   padding: 0.4rem;
   background: #203031;
-  border: 1px solid #84A98C;
+  border-top: 1px solid #84a98c;
+  border-bottom: 1px solid #84a98c;
+  border-right: none;
+  border-left: none;
   box-shadow: -0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.45);
   color: #cad2c5;
   font-family: "Lora", serif;
   font-size: 1rem;
+
+	&:focus {
+		outline: none;
+	}
 `;
 
 const TextAreaInput = ({ encryptMode }: TextInputProps): JSX.Element => {
@@ -51,10 +59,15 @@ const TextAreaInput = ({ encryptMode }: TextInputProps): JSX.Element => {
         <Label>{labelText}</Label>
         <FileInput />
       </LabelRow>
-      <TextArea onChange={(e) => handleTextChange(e)} value={text} />
+      <TextArea
+        animate={{ x: [-30, 0] }}
+        onChange={(e) => handleTextChange(e)}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        value={text}
+      />
       <SubmitBtn
         endpoint={encryptMode ? "encrypt" : "decrypt"}
-				label={btnText}
+        label={btnText}
         setText={setText}
         text={text}
       />
