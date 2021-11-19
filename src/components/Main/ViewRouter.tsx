@@ -1,5 +1,5 @@
 import React from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 import DecryptView from "../Decrypt/DecryptView";
 import EncryptView from "../Encrypt/EncryptView";
 import SettingsView from "../Settings/SettingsView";
@@ -7,42 +7,70 @@ import KeychainView from "../Keyring/KeyringView";
 import GenerateKeyView from "../Generate/GenerateKeyView";
 import ContactsView from "../Contacts/ContactsView";
 import { AppViews } from "../../data/AppViews";
+import { PrivateKey } from "./NcryptorApp";
 
 type ViewRouterProps = {
-	setView: Function,
-	view: AppViews
+  currentUser: string;
+  privateKeys: PrivateKey[];
+  setCurrentUser: Function;
+  setView: Function;
+  view: AppViews;
 };
 
 const View = styled.div`
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 `;
 
-const getView = (currentView: AppViews, setView: Function) => {
-	switch(currentView) {
-		case AppViews.Encrypt:
-			return <EncryptView />;
-		case AppViews.Decrypt:
-			return <DecryptView />;
-		case AppViews.Keychain:
-			return <KeychainView setView={setView} />;
-		case AppViews.Contacts:
-			return <ContactsView />;
-		case AppViews.Settings:
-			return <SettingsView />;
-		case AppViews.GenerateKey:
-			return <GenerateKeyView setView={setView} />;
-		default:
-			return null;
-	}
+const getView = ({
+  currentUser,
+  privateKeys,
+  setCurrentUser,
+  setView,
+  view,
+}: ViewRouterProps) => {
+  switch (view) {
+    case AppViews.Encrypt:
+      return (
+        <EncryptView
+          currentUser={currentUser}
+          privateKeys={privateKeys}
+          setCurrentUser={setCurrentUser}
+        />
+      );
+    case AppViews.Decrypt:
+      return (
+        <DecryptView
+          currentUser={currentUser}
+          privateKeys={privateKeys}
+          setCurrentUser={setCurrentUser}
+        />
+      );
+    case AppViews.Keychain:
+      return <KeychainView setView={setView} />;
+    case AppViews.Contacts:
+      return <ContactsView />;
+    case AppViews.Settings:
+      return <SettingsView />;
+    case AppViews.GenerateKey:
+      return <GenerateKeyView setView={setView} />;
+    default:
+      return null;
+  }
 };
 
-const ViewRouter = ({ setView, view }: ViewRouterProps): JSX.Element => {
-	return (
-		<View>
-			{getView(view, setView)}
-		</View>
-	);
+const ViewRouter = ({
+  currentUser,
+  privateKeys,
+  setCurrentUser,
+  setView,
+  view,
+}: ViewRouterProps): JSX.Element => {
+  return (
+    <View>
+      {getView({ currentUser, privateKeys, setCurrentUser, setView, view })}
+    </View>
+  );
 };
 
 export default ViewRouter;

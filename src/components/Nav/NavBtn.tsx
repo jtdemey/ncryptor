@@ -36,7 +36,7 @@ const Label = styled.h5`
 const NavBtn = ({ clickFunc, color, svgSrc, text }: NavBtnProps): JSX.Element => (
 	<section>
 		<Btn onClick={() => clickFunc()} style={{ border: `0.15rem solid ${color}` }}>
-			<FontAwesomeIcon icon={svgSrc} color="#CAD2C5" width="1.75rem" />
+			<FontAwesomeIcon icon={svgSrc} color="#CAD2C5" width="28px" />
 		</Btn>
 		<Label>{text}</Label>
 	</section>

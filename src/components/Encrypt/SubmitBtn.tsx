@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 export type SubmitBtnProps = {
+	currentUser: string;
   endpoint: string;
 	label: string;
 	setText: Function;
@@ -9,11 +10,11 @@ export type SubmitBtnProps = {
 };
 
 const Button = styled.div`
-  margin: 1rem 0 0 auto;
+  margin: 1rem 0 auto auto;
   padding: 0.5rem 1rem;
   background: #52796f;
   border: 1px solid #52796F;
-  box-shadow: -0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.45);
+  box-shadow: -3px 3px 8px #222;
   color: #cad2c5;
   font-family: "Lato", sans-serif;
   font-size: 1.1rem;
@@ -22,22 +23,21 @@ const Button = styled.div`
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 `;
 
-const executeFetch = (endpoint: string, text: string): Promise<Response> =>
+const executeFetch = (endpoint: string, text: string, userId: string): Promise<Response> =>
   fetch(`${window.location.href}api/${endpoint}`, {
 		method: 'post',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ text })
+		body: JSON.stringify({ text, userId })
 	});
 
-const SubmitBtn = ({ endpoint, label, setText, text }: SubmitBtnProps): JSX.Element => {
+const SubmitBtn = ({ currentUser, endpoint, label, setText, text }: SubmitBtnProps): JSX.Element => {
   const [loading, setLoading] = React.useState(false);
   const clickFunc = () => {
     setLoading(true);
-    executeFetch(endpoint, text).then((response: Response) => response.json()).then(result => {
-      console.log(result);
+    executeFetch(endpoint, text, currentUser).then((response: Response) => response.json()).then(result => {
 			setLoading(false);
 			setText(result.text);
     });

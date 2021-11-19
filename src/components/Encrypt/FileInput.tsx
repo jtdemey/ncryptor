@@ -25,7 +25,7 @@ const Input = styled.input`
 const FileInput = (): JSX.Element => (
 	<Container>
 		<Label htmlFor="file-input">
-			<FontAwesomeIcon icon={faUpload} width="1.5rem" />
+			<FontAwesomeIcon icon={faUpload} width="32px" />
 		</Label>
 		<Input type="file" name="file-input" />
 	</Container>

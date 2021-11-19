@@ -38,7 +38,7 @@ const GenerateKeyBtn = ({ setView }: GenerateKeyBtnProps): JSX.Element => {
   return (
     <Button onClick={() => clickFunc()}>
 			<SvgSpan>
-				<FontAwesomeIcon icon={faPlus} width="1rem" style={{ transform: 'translateY(0.1rem)' }} />
+				<FontAwesomeIcon icon={faPlus} width="16px" style={{ transform: 'translateY(0.1rem)' }} />
 			</SvgSpan>
 			<TextSpan>Generate new keypair</TextSpan>
 		</Button>

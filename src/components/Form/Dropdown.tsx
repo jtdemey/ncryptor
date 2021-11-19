@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 type DropdownProps = {
-  options: Array<string>;
   label: string;
   selectedValue: string | number;
+  selections: Array<string>;
   setValue: Function;
   subLabel?: string;
 };
@@ -44,7 +44,7 @@ const Select = styled.select`
 `;
 
 const Dropdown = ({
-  options,
+  selections,
   label,
   setValue,
   subLabel,
@@ -52,16 +52,16 @@ const Dropdown = ({
 }: DropdownProps): JSX.Element => {
   return (
     <>
-      <Label>{label || ""}</Label>
-      <SubLabel>{subLabel || ""}</SubLabel>
+      {label && <Label>{label || ""}</Label>}
+      {subLabel && <SubLabel>{subLabel || ""}</SubLabel>}
       <Select
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
           setValue(e.target.value)
         }
         value={selectedValue}
       >
-        {options.length &&
-          options.map((value: string) => (
+        {selections.length &&
+          selections.map((value: string) => (
             <option key={value} value={value}>
               {value}
             </option>

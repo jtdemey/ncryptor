@@ -74,7 +74,7 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
         value={userId}
       />
       <Dropdown
-        options={dropdownOptions}
+        selections={dropdownOptions}
         label="Algorithm"
         setValue={(e: React.ChangeEvent<HTMLSelectElement>) => {
           setSelectedAlgorithm(e.toString());

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { PrivateKeyColors } from "../../data/PrivateKeyColors";
 import LoadingIndicator from "../Main/LoadingIndicator";
+import { PrivateKey } from "../Main/NcryptorApp";
 import SectionCard from "../Main/SectionCard";
 import GenerateKeyBtn from "./GenerateKeyBtn";
 import NoKeysHeader from "./NoKeysHeader";
@@ -14,14 +15,6 @@ type KeyringViewProps = {
 type PrivateKeysResponse = {
   status: number;
   keys: string;
-};
-
-export type PrivateKey = {
-  color: string;
-  createdDate: string;
-  fingerprint: string;
-  keyType: string;
-  userId: string;
 };
 
 const Container = styled.section`

@@ -3,9 +3,14 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import FileInput from "./FileInput";
 import SubmitBtn from "./SubmitBtn";
+import { PrivateKey } from "../Main/NcryptorApp";
+import PrivateKeyDropdown from "./PrivateKeyDropdown";
 
 type TextInputProps = {
+  currentUser: string;
   encryptMode: boolean;
+  privateKeys: PrivateKey[];
+  setCurrentUser: Function;
 };
 
 const Container = styled.div`
@@ -27,7 +32,7 @@ const Label = styled.label`
 
 const TextArea = styled(motion.textarea)`
   width: calc(100% - 0.8rem - 1px);
-  height: 48vh;
+  height: 45vh;
   margin: 1rem auto 0;
   padding: 0.4rem;
   background: #203031;
@@ -40,12 +45,29 @@ const TextArea = styled(motion.textarea)`
   font-family: "Lora", serif;
   font-size: 1rem;
 
-	&:focus {
-		outline: none;
+  &:focus {
+    outline: none;
+  }
+
+	@media(min-height: 620px) {
+		height: 50vh;
+	}
+
+	@media(min-height: 770px) {
+		height: 60vh;
 	}
 `;
 
-const TextAreaInput = ({ encryptMode }: TextInputProps): JSX.Element => {
+const BtnRow = styled.section`
+  display: flex;
+`;
+
+const TextAreaInput = ({
+  currentUser,
+  encryptMode,
+  privateKeys,
+  setCurrentUser,
+}: TextInputProps): JSX.Element => {
   const [text, setText] = React.useState("");
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.target.value);
@@ -65,12 +87,20 @@ const TextAreaInput = ({ encryptMode }: TextInputProps): JSX.Element => {
         transition={{ duration: 0.45, ease: "easeOut" }}
         value={text}
       />
-      <SubmitBtn
-        endpoint={encryptMode ? "encrypt" : "decrypt"}
-        label={btnText}
-        setText={setText}
-        text={text}
-      />
+      <BtnRow>
+        <PrivateKeyDropdown
+          currentUser={currentUser}
+          privateKeys={privateKeys}
+          setCurrentUser={setCurrentUser}
+        />
+        <SubmitBtn
+					currentUser={currentUser}
+          endpoint={encryptMode ? "encrypt" : "decrypt"}
+          label={btnText}
+          setText={setText}
+          text={text}
+        />
+      </BtnRow>
     </Container>
   );
 };

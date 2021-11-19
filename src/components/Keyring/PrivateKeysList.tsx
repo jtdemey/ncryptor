@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { KeyTypeDisplayNames } from "../../data/KeyTypeDisplayNames";
 import { shiftLightness } from "../../utils/ColorUtils";
-import { PrivateKey } from "./KeyringView";
+import { PrivateKey } from "./../Main/NcryptorApp";
+import KeysListLegend from "./KeysListLegend";
 
 type PrivateKeysProps = {
   privateKeys: Array<PrivateKey>;
@@ -16,9 +17,9 @@ const List = styled.ul`
 `;
 
 const ListItem = styled(motion.li)`
-  margin: 0.1rem 0;
+  margin: 0.12rem 0;
   padding: 0.5rem;
-  border-radius: 0.5rem 2px 0.5rem 2px;
+  border-radius: 0.2rem 2px 0.2rem 2px;
   box-shadow: 5px 4px 0px #111;
   color: #cad2c5;
   font-size: 1rem;
@@ -51,10 +52,8 @@ const KeyTypeLabel = styled.div`
   color: #c2cfd6;
   font-family: "Lato", sans-serif;
   font-size: 1.1rem;
+  text-align: center;
 `;
-
-const getBackground = (color: string): string =>
-  `linear-gradient(45deg, ${color}, ${shiftLightness(color, 10)})`;
 
 const getDisplayName = (fingerprint: string): string =>
   fingerprint.substring(fingerprint.length - 8, fingerprint.length);
@@ -64,26 +63,29 @@ const getKeyTypeDisplayName = (keyType: string): string =>
 
 const PrivateKeysList = ({ privateKeys }: PrivateKeysProps): JSX.Element => {
   return (
-    <List>
-      {privateKeys.map((privateKey: PrivateKey, i: number) => (
-        <ListItem
-					animate={{ opacity: [0, 1], x: [-50, 0] }}
-          style={{ background: getBackground(privateKey.color) }}
-					transition={{ duration: 0.25 + (0.1 * i), ease: "easeOut" }}
-          key={privateKey.fingerprint}
-        >
-          <TextContainer>
-            <UserIdLabel>{privateKey.userId}</UserIdLabel>
-            <KeyThumbprint>
-              {getDisplayName(privateKey.fingerprint)}
-            </KeyThumbprint>
-            <KeyTypeLabel>
-              {getKeyTypeDisplayName(privateKey.keyType)}
-            </KeyTypeLabel>
-          </TextContainer>
-        </ListItem>
-      ))}
-    </List>
+		<>
+			<KeysListLegend />
+			<List>
+				{privateKeys.map((privateKey: PrivateKey, i: number) => (
+					<ListItem
+						animate={{ opacity: [0, 1], x: [-50, 0] }}
+						style={{ background: privateKey.color }}
+						transition={{ duration: 0.25 + (0.1 * i), ease: "easeOut" }}
+						key={privateKey.fingerprint}
+					>
+						<TextContainer>
+							<UserIdLabel>{privateKey.userId}</UserIdLabel>
+							<KeyThumbprint>
+								{getDisplayName(privateKey.fingerprint)}
+							</KeyThumbprint>
+							<KeyTypeLabel>
+								{getKeyTypeDisplayName(privateKey.keyType)}
+							</KeyTypeLabel>
+						</TextContainer>
+					</ListItem>
+				))}
+			</List>
+		</>
   );
 };
 

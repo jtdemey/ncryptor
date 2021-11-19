@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const SettingsGear = ({ setView }: SettingsGearProps): JSX.Element => (
 	<Container onClick={() => setView(AppViews.Settings)}>
-		<FontAwesomeIcon icon={faCog} color="#84A98C" width="1.75rem" />
+		<FontAwesomeIcon icon={faCog} color="#84A98C" width="32px" />
 	</Container>
 );
 
