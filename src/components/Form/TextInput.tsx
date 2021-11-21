@@ -18,7 +18,7 @@ const Input = styled.input`
   width: calc(100% - 1rem);
   margin: 0 0 1rem;
   padding: 0.5rem;
-  background: #2f3e46;
+  background: #203031;
   border: 1px solid #222;
   box-shadow: -3px 3px 8px #222;
   color: #cad2c5;

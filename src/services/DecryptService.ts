@@ -1,29 +1,27 @@
 import gpg from 'gpg';
 
-export const encryptString = async (
-  sender: string,
+export const decryptString = async (
   recipient: string,
   text: string
 ): Promise<string> => {
   return new Promise((resolve, reject) => {
     try {
-      gpg.encrypt(
+      gpg.decrypt(
         text,
         [
           '--default-key',
-          sender,
-          '--recipient',
           recipient,
           '--armor',
           '--trust-model',
           'always'
         ],
-        (error: object, encrypted: Buffer) => {
+        (error: object, decrypted: Buffer) => {
           if (error) {
             console.error(error);
             reject(error);
           }
-          resolve(encrypted.toString('ascii'));
+					console.log(decrypted)
+          resolve(decrypted.toString('ascii'));
         }
       );
     } catch (e) {

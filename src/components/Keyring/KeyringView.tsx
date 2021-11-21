@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { PrivateKeyColors } from "../../data/PrivateKeyColors";
+import { KeypairColors } from "../../data/KeypairColors";
 import LoadingIndicator from "../Main/LoadingIndicator";
 import { PrivateKey } from "../Main/NcryptorApp";
 import SectionCard from "../Main/SectionCard";
@@ -69,9 +69,9 @@ const parsePrivateKeysResponse = ({
     const fingerprint = splitKeys[i + 1]?.trim();
     const userIdLine = splitKeys[i + 2].split(" ");
     const userId = userIdLine[userIdLine.length - 1] || "unknown";
-		const color = PrivateKeyColors[keyColorIndex].value;
+		const color = KeypairColors[keyColorIndex].value;
     keyColorIndex =
-      keyColorIndex > PrivateKeyColors.length
+      keyColorIndex > KeypairColors.length
         ? 0
         : keyColorIndex + 1;
     parsedKeys.push({

@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { KeyTypeDisplayNames } from "../../data/KeyTypeDisplayNames";
-import { shiftLightness } from "../../utils/ColorUtils";
 import { PrivateKey } from "./../Main/NcryptorApp";
 import KeysListLegend from "./KeysListLegend";
 

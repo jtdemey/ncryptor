@@ -4,7 +4,7 @@ import styled from "styled-components";
 type DropdownProps = {
   label: string;
   selectedValue: string | number;
-  selections: Array<string>;
+  selections: [any, string][];
   setValue: Function;
   subLabel?: string;
 };
@@ -24,9 +24,9 @@ const SubLabel = styled.label`
 
 const Select = styled.select`
   width: 100%;
-  margin: 0 0 0.5rem 0;
+  margin: 0;
   padding: 0.5rem;
-  background: #2f3e46;
+  background: #203031;
   border: 1px solid #222;
   box-shadow: -3px 3px 8px #222;
   color: #cad2c5;
@@ -41,6 +41,10 @@ const Select = styled.select`
   &::placeholder {
     color: #84a98c;
   }
+
+	&:after {
+		border-radius: 0px;
+	}
 `;
 
 const Dropdown = ({
@@ -61,9 +65,9 @@ const Dropdown = ({
         value={selectedValue}
       >
         {selections.length &&
-          selections.map((value: string) => (
-            <option key={value} value={value}>
-              {value}
+          selections.map((pair: [any, string]) => (
+            <option key={pair[0]} value={pair[1]}>
+              {pair[1]}
             </option>
           ))}
       </Select>

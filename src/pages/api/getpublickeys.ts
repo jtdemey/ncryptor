@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { genKey } from "../../services/GenKeyService";
+import { getPublicKeys } from "../../services/GetPublicKeysService";
 
 export const config = {
 	api: {
@@ -8,12 +8,12 @@ export const config = {
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-	if(req.method !== 'POST') {
+	if(req.method !== 'GET') {
 		return;
 	}
-	genKey(req.body.userId).then((privateKey: string) => {
-		res.status(200).json({ status: 200, key: privateKey });
-	}).catch(err => {
+	getPublicKeys().then((publicKeys: string) => {
+		res.status(200).json({ status: 200, keys: publicKeys });
+	}).catch((err: Error) => {
 		res.status(400).json({ status: 400, text: err.toString() });
 	});
 }

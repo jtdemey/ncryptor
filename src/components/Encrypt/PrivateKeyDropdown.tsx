@@ -14,7 +14,7 @@ const Container = styled.div`
 `;
 
 const PrivateKeyDropdown = ({ currentUser, privateKeys, setCurrentUser }: PrivateKeyDropdownProps): JSX.Element => {
-	const userIds: string[] = privateKeys.map((key: PrivateKey) => key.userId);
+	const userIds: [string, string][] = privateKeys.map((key: PrivateKey) => [key.fingerprint, key.userId]);
   const [dropdownSelections, setDropdownSelections] = React.useState(userIds);
 	React.useEffect(() => setDropdownSelections(userIds), [privateKeys]);
 	return (

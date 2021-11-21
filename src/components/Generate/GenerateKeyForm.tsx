@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { AppViews } from "../../data/AppViews";
+import { sanitizeInput } from "../../utils/StringSanitizer";
 import Dropdown from "../Form/Dropdown";
 import TextInput from "../Form/TextInput";
 import BackBtn from "../Main/BackBtn";
@@ -24,6 +25,8 @@ const BtnBar = styled.h2`
 	grid-template-columns: 1fr 1fr;
 `;
 
+const ds = (stringValue: string): [string, string] => [stringValue, stringValue];
+
 const executeFetch = (): Promise<Response> =>
   fetch(`${window.location.href}api/getcurves`, {
     method: "get",
@@ -33,24 +36,13 @@ const executeFetch = (): Promise<Response> =>
     },
   });
 
-const parseCurves = (curvesResponse: string): string[] => {
+const parseCurves = (curvesResponse: string): [string, string][] => {
   const curvesString = curvesResponse.split(":")[2];
-  return curvesString.split(";").map((curve: string) => curve.trim());
+  return curvesString.split(";").map((curve: string) => ds(curve.trim()));
 };
-
-const sanitizeInput = (raw: string): string => {
-	for (let i = 0; i < raw.length; i++) {
-		if (raw[i] === " ") {
-			raw = raw.slice(0, i) + raw.slice(i + 1);
-			i--;
-		}
-	}
-	return raw.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "");
-};
-
-const initialOptions: string[] = ["rsa4096", "rsa2048", "rsa1024"];
 
 const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
+	const initialOptions: [string, string][] = [ds("rsa4096"), ds("rsa2048"), ds("rsa1024")];
   const [dropdownOptions, setDropdownOptions] = React.useState(initialOptions);
   const [userId, setUserId] = React.useState("");
   const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("");
@@ -90,4 +82,4 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
   );
 };
 
-export default GenerateKeyForm;
+export default GenerateKeyForm

@@ -1,11 +1,11 @@
-type PrivateKeyColor = {
+type KeypairColor = {
 	colorName: string;
 	value: string;
 };
 
-const genColor = (colorName: string, value: string): PrivateKeyColor => ({ colorName, value });
+const genColor = (colorName: string, value: string): KeypairColor => ({ colorName, value });
 
-export const PrivateKeyColors = [
+export const KeypairColors = [
 	genColor('NAVY', 'hsl(202, 77%, 7%)'),
 	genColor('RICH_BLUE_GREEN', 'hsl(175, 41%, 16%)'),
 	genColor('RIFLE_GREEN', 'hsl(114, 15%, 28%)'),

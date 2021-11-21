@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getCurves } from "../../services/getCurvesService";
+import { getCurves } from "../../services/GetCurvesService";
 
 export const config = {
 	api: {

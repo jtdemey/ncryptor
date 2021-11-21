@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
-	margin: 0.3rem 0 0 auto;
+	margin: 1rem auto 0 0;
 `;
 
 const Label = styled.label`
@@ -25,7 +25,7 @@ const Input = styled.input`
 const FileInput = (): JSX.Element => (
 	<Container>
 		<Label htmlFor="file-input">
-			<FontAwesomeIcon icon={faUpload} width="32px" />
+			<FontAwesomeIcon icon={faUpload} width="28px" />
 		</Label>
 		<Input type="file" name="file-input" />
 	</Container>

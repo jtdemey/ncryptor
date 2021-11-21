@@ -3,14 +3,11 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import FileInput from "./FileInput";
 import SubmitBtn from "./SubmitBtn";
-import { PrivateKey } from "../Main/NcryptorApp";
-import PrivateKeyDropdown from "./PrivateKeyDropdown";
 
 type TextInputProps = {
   currentUser: string;
   encryptMode: boolean;
-  privateKeys: PrivateKey[];
-  setCurrentUser: Function;
+	recipient?: string;
 };
 
 const Container = styled.div`
@@ -18,22 +15,10 @@ const Container = styled.div`
   flex-flow: column;
 `;
 
-const LabelRow = styled.div`
-  display: flex;
-`;
-
-const Label = styled.label`
-  padding: 0 0.5rem 0 0;
-  color: #cad2c5;
-  font-family: "Lato", sans-serif;
-  font-size: 1.1rem;
-  line-height: 1.5rem;
-`;
-
 const TextArea = styled(motion.textarea)`
   width: calc(100% - 0.8rem - 1px);
   height: 45vh;
-  margin: 1rem auto 0;
+  margin: 0 auto 0;
   padding: 0.4rem;
   background: #203031;
   border-top: 1px solid #84a98c;
@@ -65,22 +50,14 @@ const BtnRow = styled.section`
 const TextAreaInput = ({
   currentUser,
   encryptMode,
-  privateKeys,
-  setCurrentUser,
+	recipient
 }: TextInputProps): JSX.Element => {
   const [text, setText] = React.useState("");
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.target.value);
-  const labelText = encryptMode
-    ? "Compose a message or upload text file."
-    : "Paste encrypted text or upload encrypted text file.";
   const btnText = encryptMode ? "Encrypt" : "Decrypt";
   return (
     <Container>
-      <LabelRow>
-        <Label>{labelText}</Label>
-        <FileInput />
-      </LabelRow>
       <TextArea
         animate={{ x: [-30, 0] }}
         onChange={(e) => handleTextChange(e)}
@@ -88,15 +65,12 @@ const TextAreaInput = ({
         value={text}
       />
       <BtnRow>
-        <PrivateKeyDropdown
-          currentUser={currentUser}
-          privateKeys={privateKeys}
-          setCurrentUser={setCurrentUser}
-        />
+				<FileInput />
         <SubmitBtn
 					currentUser={currentUser}
           endpoint={encryptMode ? "encrypt" : "decrypt"}
           label={btnText}
+					recipient={recipient}
           setText={setText}
           text={text}
         />
