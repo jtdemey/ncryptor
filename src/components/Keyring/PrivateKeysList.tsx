@@ -7,6 +7,7 @@ import KeysListLegend from "./KeysListLegend";
 
 type PrivateKeysProps = {
   privateKeys: Array<PrivateKey>;
+  setDetailsView: Function;
 };
 
 const List = styled.ul`
@@ -21,6 +22,7 @@ const ListItem = styled(motion.li)`
   border-radius: 0.2rem 2px 0.2rem 2px;
   box-shadow: 5px 4px 0px #111;
   color: #cad2c5;
+  cursor: grab;
   font-size: 1rem;
   font-weight: bold;
 `;
@@ -58,33 +60,37 @@ const getDisplayName = (fingerprint: string): string =>
   fingerprint.substring(fingerprint.length - 8, fingerprint.length);
 
 const getKeyTypeDisplayName = (keyType: string): string =>
-  KeyTypeDisplayNames.filter((x) => x.keyType === keyType)[0]?.display ?? "";
+  KeyTypeDisplayNames.filter(x => x.keyType === keyType)[0]?.display ?? "";
 
-const PrivateKeysList = ({ privateKeys }: PrivateKeysProps): JSX.Element => {
+const PrivateKeysList = ({
+  privateKeys,
+  setDetailsView
+}: PrivateKeysProps): JSX.Element => {
   return (
-		<>
-			<KeysListLegend />
-			<List>
-				{privateKeys.map((privateKey: PrivateKey, i: number) => (
-					<ListItem
-						animate={{ opacity: [0, 1], x: [-50, 0] }}
-						style={{ background: privateKey.color }}
-						transition={{ duration: 0.25 + (0.1 * i), ease: "easeOut" }}
-						key={privateKey.fingerprint}
-					>
-						<TextContainer>
-							<UserIdLabel>{privateKey.userId}</UserIdLabel>
-							<KeyThumbprint>
-								{getDisplayName(privateKey.fingerprint)}
-							</KeyThumbprint>
-							<KeyTypeLabel>
-								{getKeyTypeDisplayName(privateKey.keyType)}
-							</KeyTypeLabel>
-						</TextContainer>
-					</ListItem>
-				))}
-			</List>
-		</>
+    <>
+      <KeysListLegend />
+      <List>
+        {privateKeys.map((privateKey: PrivateKey, i: number) => (
+          <ListItem
+            animate={{ opacity: [0, 1], x: [-50, 0] }}
+            key={privateKey.fingerprint}
+						onClick={() => setDetailsView(privateKey.fingerprint)}
+            style={{ background: privateKey.color }}
+            transition={{ duration: 0.25 + 0.1 * i, ease: "easeOut" }}
+          >
+            <TextContainer>
+              <UserIdLabel>{privateKey.userId}</UserIdLabel>
+              <KeyThumbprint>
+                {getDisplayName(privateKey.fingerprint)}
+              </KeyThumbprint>
+              <KeyTypeLabel>
+                {getKeyTypeDisplayName(privateKey.keyType)}
+              </KeyTypeLabel>
+            </TextContainer>
+          </ListItem>
+        ))}
+      </List>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import DecryptView from '../Decrypt/DecryptView';
 import EncryptView from '../Encrypt/EncryptView';
 import SettingsView from '../Settings/SettingsView';
-import KeychainView from '../Keyring/KeyringView';
+import KeyringView from '../Keyring/KeyringView';
 import GenerateKeyView from '../Generate/GenerateKeyView';
 import ContactsView from '../Contacts/ContactsView';
 import { AppViews } from '../../data/AppViews';
@@ -49,8 +49,8 @@ const getView = ({
           setCurrentUser={setCurrentUser}
         />
       );
-    case AppViews.Keychain:
-      return <KeychainView setView={setView} />;
+    case AppViews.Keyring:
+      return <KeyringView setView={setView} />;
     case AppViews.Contacts:
       return <ContactsView />;
     case AppViews.Settings:

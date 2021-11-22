@@ -54,7 +54,6 @@ const SubmitBtn = ({
       .then((response: Response) => response.json())
       .then(result => {
         setLoading(false);
-				console.log(result)
         setText(result.text);
       });
   };

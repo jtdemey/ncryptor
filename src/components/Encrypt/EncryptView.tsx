@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from "framer-motion";
 import styled from 'styled-components';
 import TextAreaInput from './TextAreaInput';
 import SectionCard from '../Main/SectionCard';
@@ -14,7 +15,7 @@ type EncryptViewProps = {
   setCurrentUser: Function;
 };
 
-const InputRow = styled.div`
+const InputRow = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr 3fr;
 `;
@@ -27,10 +28,10 @@ const EncryptView = ({
 }: EncryptViewProps): JSX.Element => {
   const [recipient, setRecipient] = React.useState('');
 	const senderFingerprint = privateKeys.filter((key: PrivateKey) => key.userId === currentUser)[0]?.fingerprint;
-	const recipientFingerprint = publicKeys.filter((key: PublicKey) => key.userId === currentUser)[0]?.fingerprint;
+	const recipientFingerprint = publicKeys.filter((key: PublicKey) => key.userId === recipient)[0]?.fingerprint;
   return (
     <SectionCard>
-      <InputRow>
+      <InputRow animate={{ x: [-50, 0] }} transition={{ duration: 0.25, ease: "easeOut" }}>
         <SelectionLabel text="From: " />
         <SenderSelection
           currentUser={currentUser}
@@ -38,7 +39,7 @@ const EncryptView = ({
           setCurrentUser={setCurrentUser}
         />
       </InputRow>
-      <InputRow>
+      <InputRow animate={{ x: [-40, 0] }} transition={{ duration: 0.35, ease: "easeOut" }}>
         <SelectionLabel text="To: " />
         <RecipientSelection
           publicKeys={publicKeys}

@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const TextArea = styled(motion.textarea)`
   width: calc(100% - 0.8rem - 1px);
-  height: 45vh;
+  height: 40vh;
   margin: 0 auto 0;
   padding: 0.4rem;
   background: #203031;

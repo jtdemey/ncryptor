@@ -20,7 +20,6 @@ export const decryptString = async (
             console.error(error);
             reject(error);
           }
-					console.log(decrypted)
           resolve(decrypted.toString('ascii'));
         }
       );

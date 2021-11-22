@@ -27,7 +27,6 @@ const RecipientSelection = ({
       selections={dropdownSelections}
       label=""
       setValue={(e: React.ChangeEvent<HTMLSelectElement>) => {
-				console.log(e)
         setRecipient(e.toString());
       }}
       subLabel=""

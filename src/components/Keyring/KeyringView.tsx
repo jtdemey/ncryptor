@@ -5,6 +5,7 @@ import LoadingIndicator from "../Main/LoadingIndicator";
 import { PrivateKey } from "../Main/NcryptorApp";
 import SectionCard from "../Main/SectionCard";
 import GenerateKeyBtn from "./GenerateKeyBtn";
+import KeyDetailsCard from "./KeyDetailsCard";
 import NoKeysHeader from "./NoKeysHeader";
 import PrivateKeysList from "./PrivateKeysList";
 
@@ -89,20 +90,21 @@ const parsePrivateKeysResponse = ({
   };
 };
 
-const getContent = (loading: boolean, keys: PrivateKey[]): JSX.Element => {
+const getListContent = (loading: boolean, keys: PrivateKey[], setDetailsView: Function): JSX.Element => {
 	if (loading === true) {
 		return <LoadingIndicator />;
 	}
 	if (keys.length < 1) {
 		return <NoKeysHeader />;
 	}
-	return <PrivateKeysList privateKeys={keys} />;
+	return <PrivateKeysList privateKeys={keys} setDetailsView={setDetailsView} />;
 };
 
 const KeyringView = ({ setView }: KeyringViewProps): JSX.Element => {
-  const initialKeys: Array<PrivateKey> = [];
+  const initialKeys: PrivateKey[] = [];
   const [loading, setLoading] = React.useState(false);
   const [keys, setKeys] = React.useState(initialKeys);
+	const [showDetails, showDetailsFor] = React.useState("");
   React.useEffect(() => {
 		setLoading(true);
     executeFetch()
@@ -112,14 +114,18 @@ const KeyringView = ({ setView }: KeyringViewProps): JSX.Element => {
 				setLoading(false);
       });
   }, []);
-  return (
-		<Container>
-			<SectionCard>
-				<GenerateKeyBtn setView={setView} />
-				{getContent(loading, keys)}
-			</SectionCard>
-		</Container>
-  );
+	if (showDetails === "") {
+		return (
+			<Container>
+				<SectionCard>
+					<GenerateKeyBtn setView={setView} />
+					{getListContent(loading, keys, showDetailsFor)}
+				</SectionCard>
+			</Container>
+		);
+	}
+	const selectedKey = keys.filter(k => k.fingerprint === showDetails)[0];
+	return <KeyDetailsCard privateKey={selectedKey} />;
 };
 
 export default KeyringView;

@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import TextAreaInput from "../Encrypt/TextAreaInput";
 import SectionCard from "../Main/SectionCard";
@@ -12,7 +13,7 @@ type DecryptViewProps = {
   setCurrentUser: Function;
 };
 
-const InputRow = styled.div`
+const InputRow = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr 3fr;
 `;
@@ -21,21 +22,24 @@ const DecryptView = ({
   currentUser,
   privateKeys,
   setCurrentUser,
-}: DecryptViewProps): JSX.Element => (
-  <SectionCard>
-		<InputRow>
-			<SelectionLabel text="To: " />
-			<SenderSelection
-				currentUser={currentUser}
-				privateKeys={privateKeys}
-				setCurrentUser={setCurrentUser}
+}: DecryptViewProps): JSX.Element => {
+	const recipientFingerprint = privateKeys.filter((key: PrivateKey) => key.userId === currentUser)[0]?.fingerprint;
+	return (
+		<SectionCard>
+      <InputRow animate={{ x: [-50, 0] }} transition={{ duration: 0.25, ease: "easeOut" }}>
+				<SelectionLabel text="To: " />
+				<SenderSelection
+					currentUser={currentUser}
+					privateKeys={privateKeys}
+					setCurrentUser={setCurrentUser}
+				/>
+			</InputRow>
+			<TextAreaInput
+				currentUser={recipientFingerprint || "unknown"}
+				encryptMode={false}
 			/>
-		</InputRow>
-    <TextAreaInput
-      currentUser={currentUser}
-      encryptMode={false}
-    />
-  </SectionCard>
-);
+		</SectionCard>
+	);
+};
 
 export default DecryptView;

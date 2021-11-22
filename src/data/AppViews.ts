@@ -1,7 +1,7 @@
 export enum AppViews {
 	Encrypt,
 	Decrypt,
-	Keychain,
+	Keyring,
 	Contacts,
 	Settings,
 	GenerateKey

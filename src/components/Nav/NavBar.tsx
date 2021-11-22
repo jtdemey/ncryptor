@@ -30,7 +30,7 @@ const genNavBtnProps = (
 const navBtns: NavBtnProps[] = [
   genNavBtnProps(AppViews.Encrypt, faEnvelope, "Encrypt", "#B64402"),
   genNavBtnProps(AppViews.Decrypt, faEnvelopeOpen, "Decrypt", "#564787"),
-  genNavBtnProps(AppViews.Keychain, faKey, "Keychain", "#4C1E4F"),
+  genNavBtnProps(AppViews.Keyring, faKey, "Keyring", "#4C1E4F"),
   genNavBtnProps(AppViews.Contacts, faUserFriends, "Contacts", "#32021F"),
 ];
 
