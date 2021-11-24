@@ -19,7 +19,7 @@ const BackBtn = ({ clickFunc }: BackBtnProps): JSX.Element => (
       icon={faArrowCircleLeft}
       color="#cad2c5"
       onClick={() => clickFunc()}
-      width="2rem"
+      width="32px"
     />
   </Button>
 );

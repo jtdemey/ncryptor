@@ -13,6 +13,8 @@ type ViewRouterProps = {
   currentUser: string;
   privateKeys: PrivateKey[];
   publicKeys: PublicKey[];
+  selectedContact: string;
+  selectedPrivateKey: string;
   setCurrentUser: Function;
   setView: Function;
   view: AppViews;
@@ -27,6 +29,8 @@ const getView = ({
   currentUser,
   privateKeys,
   publicKeys,
+	selectedContact,
+	selectedPrivateKey,
   setCurrentUser,
   setView,
   view
@@ -50,7 +54,7 @@ const getView = ({
         />
       );
     case AppViews.Keyring:
-      return <KeyringView setView={setView} />;
+      return <KeyringView privateKeys={privateKeys} setView={setView} />;
     case AppViews.Contacts:
       return <ContactsView />;
     case AppViews.Settings:
@@ -66,6 +70,8 @@ const ViewRouter = ({
   currentUser,
   privateKeys,
   publicKeys,
+	selectedContact,
+	selectedPrivateKey,
   setCurrentUser,
   setView,
   view
@@ -76,6 +82,8 @@ const ViewRouter = ({
         currentUser,
         privateKeys,
         publicKeys,
+				selectedContact,
+				selectedPrivateKey,
         setCurrentUser,
         setView,
         view

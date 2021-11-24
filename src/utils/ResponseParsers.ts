@@ -1,7 +1,7 @@
 import { PrivateKey, PublicKey } from '../components/Main/NcryptorApp';
 import { KeypairColors } from '../data/KeypairColors';
 
-type KeysResponse = {
+export type KeysResponse = {
   status: number;
   keys: string;
 };

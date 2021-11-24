@@ -19,12 +19,12 @@ const List = styled.ul`
 const ListItem = styled(motion.li)`
   margin: 0.12rem 0;
   padding: 0.5rem;
-  border-radius: 0.2rem 2px 0.2rem 2px;
-  box-shadow: 5px 4px 0px #111;
+  box-shadow: 4px 4px 0px #111;
   color: #cad2c5;
   cursor: grab;
   font-size: 1rem;
   font-weight: bold;
+	opacity: 0;
 `;
 
 const TextContainer = styled.div`

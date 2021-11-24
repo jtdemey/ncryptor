@@ -1,7 +1,9 @@
 import React from "react";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 type DropdownProps = {
+  animationDuration?: number;
   label: string;
   selectedValue: string | number;
   selections: [any, string][];
@@ -9,7 +11,7 @@ type DropdownProps = {
   subLabel?: string;
 };
 
-const Label = styled.label`
+const Label = styled(motion.label)`
   color: #cad2c5;
   font-family: "Lato", sans-serif;
   font-size: 1.1rem;
@@ -22,7 +24,7 @@ const SubLabel = styled.label`
   padding-left: 0.5rem;
 `;
 
-const Select = styled.select`
+const Select = styled(motion.select)`
   width: 100%;
   margin: 0;
   padding: 0.5rem;
@@ -42,26 +44,36 @@ const Select = styled.select`
     color: #84a98c;
   }
 
-	&:after {
-		border-radius: 0px;
-	}
+  &:after {
+    border-radius: 0px;
+  }
 `;
 
 const Dropdown = ({
+	animationDuration,
   selections,
   label,
   setValue,
   subLabel,
-  selectedValue,
+  selectedValue
 }: DropdownProps): JSX.Element => {
   return (
     <>
-      {label && <Label>{label || ""}</Label>}
+      {label && (
+        <Label
+          animate={{ opacity: [0, 1] }}
+          transition={{ duration: 0.85, ease: "easeOut" }}
+        >
+          {label || ""}
+        </Label>
+      )}
       {subLabel && <SubLabel>{subLabel || ""}</SubLabel>}
       <Select
+        animate={{ opacity: [0, 1], x: [-30, 0] }}
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
           setValue(e.target.value)
         }
+        transition={{ duration: animationDuration ?? 0, ease: "easeOut" }}
         value={selectedValue}
       >
         {selections.length &&

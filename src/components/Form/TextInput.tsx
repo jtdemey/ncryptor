@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 type TextInputProps = {
@@ -8,13 +9,13 @@ type TextInputProps = {
   value?: string;
 };
 
-const Label = styled.label`
+const Label = styled(motion.label)`
   color: #cad2c5;
   font-family: "Lato", sans-serif;
   font-size: 1.1rem;
 `;
 
-const Input = styled.input`
+const Input = styled(motion.input)`
   width: calc(100% - 1rem);
   margin: 0 0 1rem;
   padding: 0.5rem;
@@ -39,14 +40,21 @@ const TextInput = ({
   changeHandler,
   maximum,
   label,
-  value,
+  value
 }: TextInputProps): JSX.Element => {
   return (
     <>
-      <Label>{label || ""}</Label>
+      <Label
+        animate={{ opacity: [0, 1] }}
+        transition={{ duration: 0.85, ease: "easeOut" }}
+      >
+        {label || ""}
+      </Label>
       <Input
-        onChange={(e) => changeHandler(e)}
+        animate={{ opacity: [0, 1], x: [-30, 0] }}
+        onChange={e => changeHandler(e)}
         max={maximum || 128}
+        transition={{ duration: 0.55, ease: "easeOut" }}
         type="text"
         value={value}
       />

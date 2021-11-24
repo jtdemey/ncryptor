@@ -10,6 +10,7 @@ import NoKeysHeader from "./NoKeysHeader";
 import PrivateKeysList from "./PrivateKeysList";
 
 type KeyringViewProps = {
+	privateKeys: PrivateKey[];
   setView: Function;
 };
 
@@ -20,6 +21,8 @@ type PrivateKeysResponse = {
 
 const Container = styled.section`
 	overflow-y: scroll;
+	scrollbar-color: #777 #444;
+	scrollbar-width: thin;
 
 	::-webkit-scrollbar {
 		width: 0.25rem;
@@ -100,31 +103,19 @@ const getListContent = (loading: boolean, keys: PrivateKey[], setDetailsView: Fu
 	return <PrivateKeysList privateKeys={keys} setDetailsView={setDetailsView} />;
 };
 
-const KeyringView = ({ setView }: KeyringViewProps): JSX.Element => {
-  const initialKeys: PrivateKey[] = [];
-  const [loading, setLoading] = React.useState(false);
-  const [keys, setKeys] = React.useState(initialKeys);
+const KeyringView = ({ privateKeys, setView }: KeyringViewProps): JSX.Element => {
 	const [showDetails, showDetailsFor] = React.useState("");
-  React.useEffect(() => {
-		setLoading(true);
-    executeFetch()
-      .then((response: Response) => response.json())
-      .then((result) => {
-        setKeys(parsePrivateKeysResponse(result).keys);
-				setLoading(false);
-      });
-  }, []);
 	if (showDetails === "") {
 		return (
 			<Container>
 				<SectionCard>
 					<GenerateKeyBtn setView={setView} />
-					{getListContent(loading, keys, showDetailsFor)}
+					{privateKeys.length < 1 ? <NoKeysHeader /> : <PrivateKeysList privateKeys={privateKeys} setDetailsView={showDetailsFor} />}
 				</SectionCard>
 			</Container>
 		);
 	}
-	const selectedKey = keys.filter(k => k.fingerprint === showDetails)[0];
+	const selectedKey = privateKeys.filter(k => k.fingerprint === showDetails)[0];
 	return <KeyDetailsCard privateKey={selectedKey} />;
 };
 

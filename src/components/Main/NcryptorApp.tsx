@@ -1,8 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { AppViews } from "../../data/AppViews";
-import { KeypairColors } from "../../data/KeypairColors";
-import { parsePrivateKeysResponse, parsePublicKeysResponse } from "../../utils/ResponseParsers";
+import {
+  setCurrentUser,
+  setPrivateKeys,
+  setPublicKeys,
+  setView
+} from "../../state/Actions";
+import { AppAction, initialState, reducer } from "../../state/Reducer";
+import {
+  KeysResponse,
+  parsePrivateKeysResponse,
+  parsePublicKeysResponse
+} from "../../utils/ResponseParsers";
 import Header from "../Header/Header";
 import NavBar from "../Nav/NavBar";
 import SettingsGear from "../Nav/SettingsGear";
@@ -25,27 +35,9 @@ export type PublicKey = {
   createdDate: string;
   fingerprint: string;
   keyType: string;
-	revocationFile: string | undefined;
+  revocationFile: string | undefined;
   userId: string;
 };
-
-const executePrivateKeysFetch = (): Promise<Response> =>
-  fetch(`${window.location.href}api/getprivatekeys`, {
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-
-const executePublicKeysFetch = (): Promise<Response> =>
-  fetch(`${window.location.href}api/getpublickeys`, {
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
 
 const Container = styled.div`
   position: fixed;
@@ -61,43 +53,59 @@ const Container = styled.div`
   );
 `;
 
+const executePrivateKeysFetch = (): Promise<Response> =>
+  fetch(`${window.location.href}api/getprivatekeys`, {
+    method: "get",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  });
+
+const executePublicKeysFetch = (): Promise<Response> =>
+  fetch(`${window.location.href}api/getpublickeys`, {
+    method: "get",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  });
+
 const NcryptorApp = (): JSX.Element => {
-  const [currentUser, setCurrentUser] = React.useState("");
-  const initialPrivateKeys: PrivateKey[] = [];
-  const [privateKeys, setPrivateKeys] = React.useState(initialPrivateKeys);
-  const initialPublicKeys: PublicKey[] = [];
-  const [publicKeys, setPublicKeys] = React.useState(initialPublicKeys);
-  const [view, setView] = React.useState(AppViews.Encrypt);
-  React.useEffect(() => {
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const dispatchSetView = (view: AppViews) => dispatch(setView(view));
+  const refreshPrivateKeys = (): void => {
     executePrivateKeysFetch()
       .then((response: Response) => response.json())
-      .then((result) => {
+      .then(result => {
         const parsedKeys = parsePrivateKeysResponse(result).keys;
-        setPrivateKeys(parsedKeys);
-        setCurrentUser(parsedKeys[0].userId);
+        dispatch(setPrivateKeys(parsedKeys));
+        dispatch(setCurrentUser(parsedKeys[0].userId));
       });
-  }, []);
+  };
+  React.useEffect(() => refreshPrivateKeys(), []);
   React.useEffect(() => {
     executePublicKeysFetch()
       .then((response: Response) => response.json())
-      .then((result) => {
-        const parsedKeys = parsePublicKeysResponse(result).keys;
-        setPublicKeys(parsedKeys);
-      });
+      .then(result =>
+        dispatch(setPublicKeys(parsePublicKeysResponse(result).keys))
+      );
   }, []);
   return (
     <Container>
       <Header />
-      <SettingsGear setView={setView} />
+      <SettingsGear setView={dispatchSetView} />
       <ViewRouter
-        currentUser={currentUser}
-        privateKeys={privateKeys}
-				publicKeys={publicKeys}
-        setCurrentUser={setCurrentUser}
-        setView={setView}
-        view={view}
+        currentUser={state.currentUser}
+        privateKeys={state.privateKeys}
+        publicKeys={state.publicKeys}
+				selectedContact={state.selectedContact}
+				selectedPrivateKey={state.selectedPrivateKey}
+        setCurrentUser={(userId: string) => dispatch(setCurrentUser(userId))}
+        setView={dispatchSetView}
+        view={state.view}
       />
-      <NavBar setView={setView} />
+      <NavBar setView={dispatchSetView} />
     </Container>
   );
 };

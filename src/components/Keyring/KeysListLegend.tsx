@@ -14,14 +14,13 @@ const Text = styled.h5`
 	color: #cad2c5;
   font-family: "Lato", sans-serif;
   font-size: 0.9rem;
-	text-align: center;
 `;
 
 const KeysListLegend = (): JSX.Element => (
 	<Container>
-		<Text>User ID</Text>
-		<Text>Fingerprint</Text>
-		<Text>Type</Text>
+		<Text style={{ textAlign: "left" }}>User ID</Text>
+		<Text style={{ textAlign: "left" }}>Fingerprint</Text>
+		<Text style={{ textAlign: "center" }}>Type</Text>
 	</Container>
 );
 
