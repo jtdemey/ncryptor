@@ -8,12 +8,17 @@ import GenerateKeyView from '../Generate/GenerateKeyView';
 import ContactsView from '../Contacts/ContactsView';
 import { AppViews } from '../../data/AppViews';
 import { PrivateKey, PublicKey } from './NcryptorApp';
+import KeyDetailsView from '../KeyDetails/KeyDetailsView';
 
 type ViewRouterProps = {
   currentUser: string;
   privateKeys: PrivateKey[];
   publicKeys: PublicKey[];
+	refreshContacts: Function;
+	refreshKeys: Function;
+  selectContact: Function;
   selectedContact: string;
+  selectPrivateKey: Function;
   selectedPrivateKey: string;
   setCurrentUser: Function;
   setView: Function;
@@ -23,13 +28,38 @@ type ViewRouterProps = {
 const View = styled.div`
   width: 100%;
   height: 100%;
+	overflow-y: scroll;
+  scrollbar-color: #777 #444;
+  scrollbar-width: thin;
+
+  ::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    display: none;
+    background: #777;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 `;
 
 const getView = ({
   currentUser,
   privateKeys,
   publicKeys,
+	refreshContacts,
+	refreshKeys,
+	selectContact,
 	selectedContact,
+	selectPrivateKey,
 	selectedPrivateKey,
   setCurrentUser,
   setView,
@@ -54,13 +84,15 @@ const getView = ({
         />
       );
     case AppViews.Keyring:
-      return <KeyringView privateKeys={privateKeys} setView={setView} />;
+      return <KeyringView privateKeys={privateKeys} refreshKeys={refreshKeys} selectPrivateKey={selectPrivateKey} setView={setView} />;
+    case AppViews.GenerateKey:
+      return <GenerateKeyView setView={setView} />;
+    case AppViews.KeyDetails:
+      return <KeyDetailsView privateKey={privateKeys.filter(k => k.fingerprint === selectedPrivateKey)[0]} />;
     case AppViews.Contacts:
       return <ContactsView />;
     case AppViews.Settings:
       return <SettingsView />;
-    case AppViews.GenerateKey:
-      return <GenerateKeyView setView={setView} />;
     default:
       return null;
   }
@@ -70,7 +102,11 @@ const ViewRouter = ({
   currentUser,
   privateKeys,
   publicKeys,
+	refreshContacts,
+	refreshKeys,
+	selectContact,
 	selectedContact,
+	selectPrivateKey,
 	selectedPrivateKey,
   setCurrentUser,
   setView,
@@ -82,7 +118,11 @@ const ViewRouter = ({
         currentUser,
         privateKeys,
         publicKeys,
+				refreshContacts,
+				refreshKeys,
+				selectContact,
 				selectedContact,
+				selectPrivateKey,
 				selectedPrivateKey,
         setCurrentUser,
         setView,

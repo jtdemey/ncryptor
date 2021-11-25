@@ -16,7 +16,7 @@ const Btn = styled.div`
 	align-items: center;
 	justify-content: center;
 	width: 3.75rem;
-	margin-top: 0.5rem;
+	margin-top: 0.75rem;
 	min-height: 3.75rem;
 	background: #202B31;
 	box-shadow: -0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.45);

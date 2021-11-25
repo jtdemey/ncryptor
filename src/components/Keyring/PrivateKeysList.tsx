@@ -7,7 +7,7 @@ import KeysListLegend from "./KeysListLegend";
 
 type PrivateKeysProps = {
   privateKeys: Array<PrivateKey>;
-  setDetailsView: Function;
+	selectPrivateKey: Function;
 };
 
 const List = styled.ul`
@@ -56,7 +56,12 @@ const KeyTypeLabel = styled.div`
   text-align: center;
 `;
 
-const getDisplayName = (fingerprint: string): string =>
+const getDisplayUserId = (userId: string): string =>
+	userId.length > 9
+		? `${userId.substring(0, 9)}...`
+		: userId;
+
+const getDisplayFingerprint = (fingerprint: string): string =>
   fingerprint.substring(fingerprint.length - 8, fingerprint.length);
 
 const getKeyTypeDisplayName = (keyType: string): string =>
@@ -64,7 +69,7 @@ const getKeyTypeDisplayName = (keyType: string): string =>
 
 const PrivateKeysList = ({
   privateKeys,
-  setDetailsView
+	selectPrivateKey
 }: PrivateKeysProps): JSX.Element => {
   return (
     <>
@@ -74,14 +79,14 @@ const PrivateKeysList = ({
           <ListItem
             animate={{ opacity: [0, 1], x: [-50, 0] }}
             key={privateKey.fingerprint}
-						onClick={() => setDetailsView(privateKey.fingerprint)}
+						onClick={() => selectPrivateKey(privateKey.fingerprint)}
             style={{ background: privateKey.color }}
             transition={{ duration: 0.25 + 0.1 * i, ease: "easeOut" }}
           >
             <TextContainer>
-              <UserIdLabel>{privateKey.userId}</UserIdLabel>
+              <UserIdLabel>{getDisplayUserId(privateKey.userId)}</UserIdLabel>
               <KeyThumbprint>
-                {getDisplayName(privateKey.fingerprint)}
+                {getDisplayFingerprint(privateKey.fingerprint)}
               </KeyThumbprint>
               <KeyTypeLabel>
                 {getKeyTypeDisplayName(privateKey.keyType)}

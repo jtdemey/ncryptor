@@ -5,11 +5,11 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { AppViews } from "../../data/AppViews";
 
 type GenerateKeyBtnProps = {
-	setView: Function
+  setView: Function;
 };
 
-const Button = styled.div`
-	margin-bottom: 2rem;
+export const Button = styled.div`
+	margin: 0 0.1rem 2rem 0.1rem;
   padding: 0.5rem;
   background: #52796f;
   border: 1px solid #354f52;
@@ -23,26 +23,27 @@ const Button = styled.div`
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 `;
 
-const SvgSpan = styled.span`
-	padding: 0.25rem;
+export const SvgSpan = styled.span`
+  padding: 0.25rem 0.25rem 0.25rem 0;
 `;
 
-const TextSpan = styled.h3`
-	display: inline-block;
-	margin: 0;
-	padding: 0 0 0 0.5rem;
+export const TextSpan = styled.h3`
+  display: inline-block;
+  margin: 0;
+  padding: 0 0 0 0.25rem;
 `;
 
-const GenerateKeyBtn = ({ setView }: GenerateKeyBtnProps): JSX.Element => {
-	const clickFunc = () => setView(AppViews.GenerateKey);
-  return (
-    <Button onClick={() => clickFunc()}>
-			<SvgSpan>
-				<FontAwesomeIcon icon={faPlus} width="16px" style={{ transform: 'translateY(0.1rem)' }} />
-			</SvgSpan>
-			<TextSpan>Generate new keypair</TextSpan>
-		</Button>
-  );
-};
+const GenerateKeyBtn = ({ setView }: GenerateKeyBtnProps): JSX.Element => (
+  <Button onClick={() => setView(AppViews.GenerateKey)}>
+    <SvgSpan>
+      <FontAwesomeIcon
+        icon={faPlus}
+        width="16px"
+        style={{ transform: "translateY(0.1rem)" }}
+      />
+    </SvgSpan>
+    <TextSpan>Generate</TextSpan>
+  </Button>
+);
 
 export default GenerateKeyBtn;

@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { AppViews } from "../../data/AppViews";
 import {
+  selectContact,
+  selectPrivateKey,
   setCurrentUser,
   setPrivateKeys,
   setPublicKeys,
   setView
 } from "../../state/Actions";
-import { AppAction, initialState, reducer } from "../../state/Reducer";
+import { initialState, reducer } from "../../state/Reducer";
 import {
   KeysResponse,
   parsePrivateKeysResponse,
@@ -40,6 +42,8 @@ export type PublicKey = {
 };
 
 const Container = styled.div`
+	display: grid;
+	grid-template-rows: 3.5rem 1fr 106px;
   position: fixed;
   top: 0;
   left: 0;
@@ -53,8 +57,8 @@ const Container = styled.div`
   );
 `;
 
-const executePrivateKeysFetch = (): Promise<Response> =>
-  fetch(`${window.location.href}api/getprivatekeys`, {
+const executeGetRequest = (endpoint: string): Promise<Response> =>
+  fetch(`${window.location.href}api/${endpoint}`, {
     method: "get",
     headers: {
       Accept: "application/json",
@@ -62,14 +66,11 @@ const executePrivateKeysFetch = (): Promise<Response> =>
     }
   });
 
+const executePrivateKeysFetch = (): Promise<Response> =>
+  executeGetRequest("getprivatekeys");
+
 const executePublicKeysFetch = (): Promise<Response> =>
-  fetch(`${window.location.href}api/getpublickeys`, {
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    }
-  });
+  executeGetRequest("getpublickeys");
 
 const NcryptorApp = (): JSX.Element => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
@@ -77,20 +78,21 @@ const NcryptorApp = (): JSX.Element => {
   const refreshPrivateKeys = (): void => {
     executePrivateKeysFetch()
       .then((response: Response) => response.json())
-      .then(result => {
+      .then((result: KeysResponse) => {
         const parsedKeys = parsePrivateKeysResponse(result).keys;
         dispatch(setPrivateKeys(parsedKeys));
         dispatch(setCurrentUser(parsedKeys[0].userId));
       });
   };
   React.useEffect(() => refreshPrivateKeys(), []);
-  React.useEffect(() => {
+	const refreshContacts = (): void => {
     executePublicKeysFetch()
       .then((response: Response) => response.json())
-      .then(result =>
+      .then((result: KeysResponse) =>
         dispatch(setPublicKeys(parsePublicKeysResponse(result).keys))
       );
-  }, []);
+	};
+  React.useEffect(() => refreshContacts(), []);
   return (
     <Container>
       <Header />
@@ -99,8 +101,17 @@ const NcryptorApp = (): JSX.Element => {
         currentUser={state.currentUser}
         privateKeys={state.privateKeys}
         publicKeys={state.publicKeys}
-				selectedContact={state.selectedContact}
-				selectedPrivateKey={state.selectedPrivateKey}
+				refreshContacts={refreshContacts}
+				refreshKeys={refreshPrivateKeys}
+        selectContact={(fingerprint: string) =>
+          dispatch(selectContact(fingerprint))
+        }
+        selectedContact={state.selectedContact}
+        selectPrivateKey={(fingerprint: string) => {
+          dispatch(selectPrivateKey(fingerprint));
+          dispatch(setView(AppViews.KeyDetails));
+        }}
+        selectedPrivateKey={state.selectedPrivateKey}
         setCurrentUser={(userId: string) => dispatch(setCurrentUser(userId))}
         setView={dispatchSetView}
         view={state.view}

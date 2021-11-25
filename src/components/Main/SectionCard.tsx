@@ -8,7 +8,7 @@ type SectionCardProps = {
 };
 
 const Container = styled(motion.div)`
-  margin: 1rem;
+  margin: 0 1rem;
   padding: 1rem;
 `;
 

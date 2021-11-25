@@ -11,14 +11,14 @@ export const ActionNames = {
   SetView: "setView"
 };
 
-export const selectContact = (userId: string): AppAction => ({
+export const selectContact = (fingerprint: string): AppAction => ({
   type: ActionNames.SelectContact,
-  payload: userId
+  payload: fingerprint
 });
 
-export const selectPrivateKey = (userId: string): AppAction => ({
+export const selectPrivateKey = (fingerprint: string): AppAction => ({
   type: ActionNames.SelectPrivateKey,
-  payload: userId
+  payload: fingerprint
 });
 
 export const setCurrentUser = (userId: string): AppAction => ({

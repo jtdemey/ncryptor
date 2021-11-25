@@ -38,8 +38,6 @@ const Container = styled.div`
 	display: flex;
 	justify-content: center;
 	width: 100%;
-  position: fixed;
-  bottom: 0rem;
   overflow: hidden;
 `;
 
@@ -48,7 +46,7 @@ const Bar = styled.div`
 	width: 100%;
   display: flex;
   justify-content: space-evenly;
-  padding: 0 0 0.75rem;
+  padding: 0;
 	z-index: 2;
 
 	@media (min-width: 700px) {

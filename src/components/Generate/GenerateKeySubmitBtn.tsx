@@ -40,10 +40,7 @@ const GenerateKeySubmitBtn = ({
     setLoading(true);
     executeFetch(userId, algorithm)
       .then((response: Response) => response.json())
-      .then((result) => {
-        console.log(result);
-        setLoading(false);
-      });
+      .then(() => setLoading(false));
   };
   return <Button onClick={() => clickFunc()}>{loading ? '...' : 'Generate'}</Button>;
 };
