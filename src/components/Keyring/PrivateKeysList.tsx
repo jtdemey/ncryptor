@@ -5,18 +5,18 @@ import { KeyTypeDisplayNames } from "../../data/KeyTypeDisplayNames";
 import { PrivateKey } from "./../Main/NcryptorApp";
 import KeysListLegend from "./KeysListLegend";
 
-type PrivateKeysProps = {
+type PrivateKeysListProps = {
   privateKeys: Array<PrivateKey>;
 	selectPrivateKey: Function;
 };
 
-const List = styled.ul`
+export const List = styled.ul`
   margin: 0.5rem auto;
   padding: 0;
   list-style-type: none;
 `;
 
-const ListItem = styled(motion.li)`
+export const ListItem = styled(motion.li)`
   margin: 0.12rem 0;
   padding: 0.5rem;
   box-shadow: 4px 4px 0px #111;
@@ -27,27 +27,27 @@ const ListItem = styled(motion.li)`
 	opacity: 0;
 `;
 
-const TextContainer = styled.div`
+export const TextContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   text-shadow: -2px 2px 1px #111;
 `;
 
-const UserIdLabel = styled.div`
+export const UserIdLabel = styled.div`
   display: flex;
   align-items: center;
   font-family: "Lora", serif;
   text-align: left;
 `;
 
-const KeyThumbprint = styled.div`
+export const KeyThumbprint = styled.div`
   display: flex;
   align-items: center;
   font-family: "Lato", sans-serif;
   text-align: left;
 `;
 
-const KeyTypeLabel = styled.div`
+export const KeyTypeLabel = styled.div`
   margin: 0.25rem 0 0.25rem 1rem;
   padding: 0.1rem;
   color: #c2cfd6;
@@ -70,7 +70,7 @@ const getKeyTypeDisplayName = (keyType: string): string =>
 const PrivateKeysList = ({
   privateKeys,
 	selectPrivateKey
-}: PrivateKeysProps): JSX.Element => {
+}: PrivateKeysListProps): JSX.Element => {
   return (
     <>
       <KeysListLegend />

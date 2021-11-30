@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import { motion } from "framer-motion";
-import styled from 'styled-components';
-import TextAreaInput from './TextAreaInput';
-import SectionCard from '../Main/SectionCard';
-import { PrivateKey, PublicKey } from '../Main/NcryptorApp';
-import RecipientSelection from './RecipientSelection';
-import SenderSelection from './SenderSelection';
-import SelectionLabel from './SelectionLabel';
+import styled from "styled-components";
+import TextAreaInput from "./TextAreaInput";
+import SectionCard from "../Main/SectionCard";
+import { PrivateKey, PublicKey } from "../Main/NcryptorApp";
+import RecipientSelection from "./RecipientSelection";
+import SenderSelection from "./SenderSelection";
+import SelectionLabel from "./SelectionLabel";
 
 type EncryptViewProps = {
   currentUser: string;
@@ -26,12 +26,19 @@ const EncryptView = ({
   publicKeys,
   setCurrentUser
 }: EncryptViewProps): JSX.Element => {
-  const [recipient, setRecipient] = React.useState('');
-	const senderFingerprint = privateKeys.filter((key: PrivateKey) => key.userId === currentUser)[0]?.fingerprint;
-	const recipientFingerprint = publicKeys.filter((key: PublicKey) => key.userId === recipient)[0]?.fingerprint;
+  const [recipient, setRecipient] = React.useState("");
+  const senderFingerprint = privateKeys.filter(
+    (key: PrivateKey) => key.userId === currentUser
+  )[0]?.fingerprint;
+  const recipientFingerprint = publicKeys.filter(
+    (key: PublicKey) => key.userId === recipient
+  )[0]?.fingerprint;
   return (
     <SectionCard>
-      <InputRow animate={{ x: [-50, 0] }} transition={{ duration: 0.25, ease: "easeOut" }}>
+      <InputRow
+        animate={{ x: [-50, 0] }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+      >
         <SelectionLabel text="From: " />
         <SenderSelection
           currentUser={currentUser}
@@ -39,7 +46,10 @@ const EncryptView = ({
           setCurrentUser={setCurrentUser}
         />
       </InputRow>
-      <InputRow animate={{ x: [-40, 0] }} transition={{ duration: 0.35, ease: "easeOut" }}>
+      <InputRow
+        animate={{ x: [-40, 0] }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+      >
         <SelectionLabel text="To: " />
         <RecipientSelection
           publicKeys={publicKeys}

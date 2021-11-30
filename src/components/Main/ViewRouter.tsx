@@ -1,21 +1,21 @@
-import React from 'react';
-import styled from 'styled-components';
-import DecryptView from '../Decrypt/DecryptView';
-import EncryptView from '../Encrypt/EncryptView';
-import SettingsView from '../Settings/SettingsView';
-import KeyringView from '../Keyring/KeyringView';
-import GenerateKeyView from '../Generate/GenerateKeyView';
-import ContactsView from '../Contacts/ContactsView';
-import { AppViews } from '../../data/AppViews';
-import { PrivateKey, PublicKey } from './NcryptorApp';
-import KeyDetailsView from '../KeyDetails/KeyDetailsView';
+import React from "react";
+import styled from "styled-components";
+import DecryptView from "../Decrypt/DecryptView";
+import EncryptView from "../Encrypt/EncryptView";
+import SettingsView from "../Settings/SettingsView";
+import KeyringView from "../Keyring/KeyringView";
+import GenerateKeyView from "../Generate/GenerateKeyView";
+import ContactsView from "../Contacts/ContactsView";
+import { AppViews } from "../../data/AppViews";
+import { PrivateKey, PublicKey } from "./NcryptorApp";
+import KeyDetailsView from "../KeyDetails/KeyDetailsView";
 
 type ViewRouterProps = {
   currentUser: string;
   privateKeys: PrivateKey[];
   publicKeys: PublicKey[];
-	refreshContacts: Function;
-	refreshKeys: Function;
+  refreshContacts: Function;
+  refreshKeys: Function;
   selectContact: Function;
   selectedContact: string;
   selectPrivateKey: Function;
@@ -28,7 +28,7 @@ type ViewRouterProps = {
 const View = styled.div`
   width: 100%;
   height: 100%;
-	overflow-y: scroll;
+  overflow-y: scroll;
   scrollbar-color: #777 #444;
   scrollbar-width: thin;
 
@@ -55,12 +55,12 @@ const getView = ({
   currentUser,
   privateKeys,
   publicKeys,
-	refreshContacts,
-	refreshKeys,
-	selectContact,
-	selectedContact,
-	selectPrivateKey,
-	selectedPrivateKey,
+  refreshContacts,
+  refreshKeys,
+  selectContact,
+  selectedContact,
+  selectPrivateKey,
+  selectedPrivateKey,
   setCurrentUser,
   setView,
   view
@@ -84,13 +84,33 @@ const getView = ({
         />
       );
     case AppViews.Keyring:
-      return <KeyringView privateKeys={privateKeys} refreshKeys={refreshKeys} selectPrivateKey={selectPrivateKey} setView={setView} />;
+      return (
+        <KeyringView
+          privateKeys={privateKeys}
+          refreshKeys={refreshKeys}
+          selectPrivateKey={selectPrivateKey}
+          setView={setView}
+        />
+      );
     case AppViews.GenerateKey:
       return <GenerateKeyView setView={setView} />;
     case AppViews.KeyDetails:
-      return <KeyDetailsView privateKey={privateKeys.filter(k => k.fingerprint === selectedPrivateKey)[0]} />;
+      return (
+        <KeyDetailsView
+          privateKey={
+            privateKeys.filter(k => k.fingerprint === selectedPrivateKey)[0]
+          }
+        />
+      );
     case AppViews.Contacts:
-      return <ContactsView />;
+      return (
+        <ContactsView
+          publicKeys={publicKeys}
+          refreshContacts={refreshContacts}
+          selectContact={selectContact}
+          setView={setView}
+        />
+      );
     case AppViews.Settings:
       return <SettingsView />;
     default:
@@ -102,12 +122,12 @@ const ViewRouter = ({
   currentUser,
   privateKeys,
   publicKeys,
-	refreshContacts,
-	refreshKeys,
-	selectContact,
-	selectedContact,
-	selectPrivateKey,
-	selectedPrivateKey,
+  refreshContacts,
+  refreshKeys,
+  selectContact,
+  selectedContact,
+  selectPrivateKey,
+  selectedPrivateKey,
   setCurrentUser,
   setView,
   view
@@ -118,12 +138,12 @@ const ViewRouter = ({
         currentUser,
         privateKeys,
         publicKeys,
-				refreshContacts,
-				refreshKeys,
-				selectContact,
-				selectedContact,
-				selectPrivateKey,
-				selectedPrivateKey,
+        refreshContacts,
+        refreshKeys,
+        selectContact,
+        selectedContact,
+        selectPrivateKey,
+        selectedPrivateKey,
         setCurrentUser,
         setView,
         view

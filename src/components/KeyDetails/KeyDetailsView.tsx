@@ -22,7 +22,7 @@ const DetailsContainer = styled.section`
 
 const KeyDetailsView = ({ privateKey }: KeyDetailsViewProps): JSX.Element => (
   <Container>
-    <SectionCard backgroundColor={privateKey.color}>
+    <SectionCard>
       <KeyHeader
         color={privateKey.color}
         fingerprint={privateKey.fingerprint}

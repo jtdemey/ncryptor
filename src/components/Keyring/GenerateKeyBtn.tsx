@@ -6,10 +6,11 @@ import { AppViews } from "../../data/AppViews";
 
 type GenerateKeyBtnProps = {
   setView: Function;
+  text?: string;
 };
 
 export const Button = styled.div`
-	margin: 0 0.1rem 2rem 0.1rem;
+  margin: 0 0.1rem 2rem 0.1rem;
   padding: 0.5rem;
   background: #52796f;
   border: 1px solid #354f52;
@@ -33,7 +34,10 @@ export const TextSpan = styled.h3`
   padding: 0 0 0 0.25rem;
 `;
 
-const GenerateKeyBtn = ({ setView }: GenerateKeyBtnProps): JSX.Element => (
+const GenerateKeyBtn = ({
+  setView,
+  text
+}: GenerateKeyBtnProps): JSX.Element => (
   <Button onClick={() => setView(AppViews.GenerateKey)}>
     <SvgSpan>
       <FontAwesomeIcon
@@ -42,7 +46,7 @@ const GenerateKeyBtn = ({ setView }: GenerateKeyBtnProps): JSX.Element => (
         style={{ transform: "translateY(0.1rem)" }}
       />
     </SvgSpan>
-    <TextSpan>Generate</TextSpan>
+    <TextSpan>{text || "Generate"}</TextSpan>
   </Button>
 );
 

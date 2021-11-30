@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AppViews } from "../../data/AppViews";
 import { sanitizeInput } from "../../utils/StringSanitizer";
 import Dropdown from "../Form/Dropdown";
+import RadioBtnGroup from "../Form/RadioBtnGroup";
 import TextInput from "../Form/TextInput";
 import BackBtn from "../Main/BackBtn";
 import CancelCreateBtn from "./CancelCreateBtn";
@@ -49,6 +50,8 @@ const parseCurves = (curvesResponse: string): [string, string][] => {
   return curvesString.split(";").map((curve: string) => ds(curve.trim()));
 };
 
+const radioSelections = ["1m", "2m", "6m", "1y", "never", "custom"];
+
 const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
   const initialOptions: [string, string][] = [
     ds("rsa4096"),
@@ -87,6 +90,7 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
         subLabel="(recommended: rsa4096)"
         selectedValue={selectedAlgorithm}
       />
+      <RadioBtnGroup label="Expiration Date" selections={radioSelections} />
       <BtnBar>
         <GenerateKeySubmitBtn algorithm={selectedAlgorithm} userId={userId} />
         <CancelCreateBtn clickFunc={() => setView(AppViews.Keyring)} />
