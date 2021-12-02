@@ -21,7 +21,7 @@ export const ListItem = styled(motion.li)`
   padding: 0.5rem;
   box-shadow: 4px 4px 0px #111;
   color: #cad2c5;
-  cursor: grab;
+  cursor: pointer;
   font-size: 1rem;
   font-weight: bold;
 	opacity: 0;

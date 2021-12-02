@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import FileInput from "./FileInput";
 import SubmitBtn from "./SubmitBtn";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 type TextInputProps = {
   currentUser: string;
@@ -17,7 +18,7 @@ const Container = styled.div`
 
 const TextArea = styled(motion.textarea)`
   width: calc(100% - 0.8rem - 1px);
-  height: 40vh;
+  height: 50vh;
   margin: 0 auto 0;
   padding: 0.4rem;
   background: #203031;
@@ -33,14 +34,6 @@ const TextArea = styled(motion.textarea)`
   &:focus {
     outline: none;
   }
-
-	@media(min-height: 620px) {
-		height: 50vh;
-	}
-
-	@media(min-height: 770px) {
-		height: 60vh;
-	}
 `;
 
 const BtnRow = styled.section`
@@ -52,6 +45,8 @@ const TextAreaInput = ({
   encryptMode,
 	recipient
 }: TextInputProps): JSX.Element => {
+  const dimensions = useWindowDimensions();
+  const textAreaStyle = { height: dimensions.height ? dimensions.height - 350 : "40vh" };
   const [text, setText] = React.useState("");
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.target.value);
@@ -61,6 +56,7 @@ const TextAreaInput = ({
       <TextArea
         animate={{ x: [-30, 0] }}
         onChange={(e) => handleTextChange(e)}
+        style={textAreaStyle}
         transition={{ duration: 0.45, ease: "easeOut" }}
         value={text}
       />

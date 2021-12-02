@@ -11,6 +11,7 @@ import {
 import { AppViews } from "../../data/AppViews";
 
 type NavBarProps = {
+  view: AppViews;
 	setView: Function 
 };
 
@@ -22,6 +23,7 @@ const genNavBtnProps = (
 ): NavBtnProps => ({
 	clickFunc: () => false,
   color,
+  currentView: undefined,
   id,
   svgSrc,
   text,
@@ -54,7 +56,7 @@ const Bar = styled.div`
 	}
 `;
 
-const NavBar = ({ setView }: NavBarProps): JSX.Element => (
+const NavBar = ({ view, setView }: NavBarProps): JSX.Element => (
   <Container>
     <Bar>
       {navBtns.map((btn) => (
@@ -63,6 +65,7 @@ const NavBar = ({ setView }: NavBarProps): JSX.Element => (
           id={btn.id}
 					clickFunc={() => setView(btn.id)}
           color={btn.color}
+          currentView={view}
           svgSrc={btn.svgSrc}
           text={btn.text}
         />

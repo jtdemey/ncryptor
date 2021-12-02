@@ -116,7 +116,7 @@ const NcryptorApp = (): JSX.Element => {
         setView={dispatchSetView}
         view={state.view}
       />
-      <NavBar setView={dispatchSetView} />
+      <NavBar view={state.view} setView={dispatchSetView} />
     </Container>
   );
 };

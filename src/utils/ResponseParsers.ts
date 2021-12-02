@@ -1,5 +1,5 @@
-import { PrivateKey, PublicKey } from '../components/Main/NcryptorApp';
-import { KeypairColors } from '../data/KeypairColors';
+import { PrivateKey, PublicKey } from "../components/Main/NcryptorApp";
+import { KeypairColors } from "../data/KeypairColors";
 
 export type KeysResponse = {
   status: number;
@@ -8,16 +8,16 @@ export type KeysResponse = {
 
 const parseResponseBody = (keys: string): { keys: any[]; ringPath: string } => {
   const parsedKeys: any[] = [];
-  const splitKeys = keys.split('\n');
+  const splitKeys = keys.split("\n");
   let keyColorIndex = 0;
   for (let i = 2; i < splitKeys.length; i++) {
-    const metaLine = splitKeys[i].split(' ');
-    if (metaLine[0] !== 'sec' && metaLine[0] !== 'pub') continue;
-    const keyType = metaLine[3] || 'unknown';
-    const createdDate = metaLine[4] || 'unknown';
+    const metaLine = splitKeys[i].split(" ");
+    if (metaLine[0] !== "sec" && metaLine[0] !== "pub") continue;
+    const keyType = metaLine[3] || "unknown";
+    const createdDate = metaLine[4] || "unknown";
     const fingerprint = splitKeys[i + 1]?.trim();
-    const userIdLine = splitKeys[i + 2].split(' ');
-    const userId = userIdLine[userIdLine.length - 1] || 'unknown';
+    const userIdLine = splitKeys[i + 2].split(" ");
+    const userId = userIdLine[userIdLine.length - 1] || "unknown";
     const color = KeypairColors[keyColorIndex].value;
     keyColorIndex =
       keyColorIndex > KeypairColors.length ? 0 : keyColorIndex + 1;
@@ -36,36 +36,42 @@ const parseResponseBody = (keys: string): { keys: any[]; ringPath: string } => {
   };
 };
 
-export const parsePrivateKeysResponse = ({
+const handleGetKeysResponse = ({
   status,
   keys
-}: KeysResponse): { keys: Array<PrivateKey>; ringPath: string } => {
+}: KeysResponse): { keys: any[]; ringPath: string } => {
   if (status !== 200) {
     console.error(`Error ${status} getting private keys from keyring`);
   }
   if (!keys) {
-    return { ringPath: 'N/A', keys: [] };
+    return { ringPath: "N/A", keys: [] };
   }
   const parsedKeys = parseResponseBody(keys);
   return {
-    keys: parsedKeys.keys,
+    keys: sortKeysByUserId(parsedKeys.keys),
     ringPath: parsedKeys.ringPath
   };
 };
 
+const sortKeysByUserId = (keys: PrivateKey[] | PublicKey[]): any[] =>
+  keys.sort((currentKey, nextKey) => {
+    if (currentKey.userId < nextKey.userId) {
+      return -1;
+    }
+    if (currentKey.userId > nextKey.userId) {
+      return 1;
+    }
+    return 0;
+  });
+
+export const parsePrivateKeysResponse = ({
+  status,
+  keys
+}: KeysResponse): { keys: Array<PrivateKey>; ringPath: string } =>
+  handleGetKeysResponse({ status, keys });
+
 export const parsePublicKeysResponse = ({
   status,
   keys
-}: KeysResponse): { keys: Array<PublicKey>; ringPath: string } => {
-  if (status !== 200) {
-    console.error(`Error ${status} getting public keys from keyring`);
-  }
-  if (!keys) {
-    return { ringPath: 'N/A', keys: [] };
-  }
-  const parsedKeys = parseResponseBody(keys);
-  return {
-    keys: parsedKeys.keys,
-    ringPath: parsedKeys.ringPath
-  };
-};
+}: KeysResponse): { keys: Array<PublicKey>; ringPath: string } =>
+  handleGetKeysResponse({ status, keys });

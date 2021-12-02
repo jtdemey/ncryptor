@@ -10,13 +10,14 @@ type GenerateKeyBtnProps = {
 };
 
 export const Button = styled.div`
-  margin: 0 0.1rem 2rem 0.1rem;
+  margin: 0 0.1rem 1rem 0.1rem;
   padding: 0.5rem;
   background: #52796f;
   border: 1px solid #354f52;
   border-radius: 0.2rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.45);
   color: #cad2c5;
+  cursor: pointer;
   font-family: "Lato", sans-serif;
   font-size: 1rem;
   font-weight: bold;
