@@ -31,17 +31,24 @@ const KeyDetailsView = ({ privateKey }: KeyDetailsViewProps): JSX.Element => (
         <KeyDetailsGroup
           color={privateKey.color}
           labelText="User ID"
+          showCopyBtn={true}
           valueText={privateKey.userId}
         />
         <KeyDetailsGroup
           color={privateKey.color}
           labelText="Fingerprint"
+          showCopyBtn={true}
           valueText={privateKey.fingerprint}
         />
         <KeyDetailsGroup
           color={privateKey.color}
           labelText="Created Date"
           valueText={privateKey.createdDate}
+        />
+        <KeyDetailsGroup
+          color={privateKey.color}
+          labelText="Expiration Date"
+          valueText={privateKey.expirationDate ?? "Never"}
         />
         <KeyDetailsGroup
           color={privateKey.color}

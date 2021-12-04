@@ -3,16 +3,22 @@ import KeyPropertyLabel from "./KeyPropertyLabel";
 import KeyPropertyValue from "./KeyPropertyValue";
 
 type KeyDetailsGroupProps = {
-	color: string;
+  color: string;
   labelText: string;
-	valueText: string;
+  showCopyBtn?: boolean;
+  valueText: string;
 };
 
-const KeyDetailsGroup = ({ color, labelText, valueText }: KeyDetailsGroupProps): JSX.Element => (
+const KeyDetailsGroup = ({
+  color,
+  labelText,
+  showCopyBtn,
+  valueText
+}: KeyDetailsGroupProps): JSX.Element => (
   <article>
-		<KeyPropertyLabel text={labelText} />
-		<KeyPropertyValue color={color} text={valueText} />
-	</article>
+    <KeyPropertyLabel text={labelText} />
+    <KeyPropertyValue color={color} showCopyBtn={showCopyBtn} text={valueText} />
+  </article>
 );
 
 export default KeyDetailsGroup;

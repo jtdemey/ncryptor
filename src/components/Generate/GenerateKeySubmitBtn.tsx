@@ -6,7 +6,7 @@ type GenerateKeySubmitBtnProps = {
   userId: string;
 };
 
-const Button = styled.div`
+export const Button = styled.div`
 	width: calc(100% - 1rem);
   margin: 1rem 0.5rem 0.5rem;
   padding: 0.5rem 0;

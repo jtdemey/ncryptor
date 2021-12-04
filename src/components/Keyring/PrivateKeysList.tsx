@@ -19,6 +19,7 @@ export const List = styled.ul`
 export const ListItem = styled(motion.li)`
   margin: 0.12rem 0;
   padding: 0.5rem;
+  background: hsl(201, 20%, 20%);
   box-shadow: 4px 4px 0px #111;
   color: #cad2c5;
   cursor: pointer;

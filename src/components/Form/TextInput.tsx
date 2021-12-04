@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 
 type TextInputProps = {
+  autoFocus?: boolean;
   changeHandler: Function;
   maximum: number;
   label?: string;
@@ -17,7 +18,7 @@ const Label = styled(motion.label)`
 
 const Input = styled(motion.input)`
   width: calc(100% - 1rem);
-  margin: 0 0 1rem;
+  margin: 0 0 1.5rem;
   padding: 0.5rem;
   background: #203031;
   border: 1px solid #222;
@@ -37,11 +38,18 @@ const Input = styled(motion.input)`
 `;
 
 const TextInput = ({
+  autoFocus,
   changeHandler,
   maximum,
   label,
   value
 }: TextInputProps): JSX.Element => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  React.useEffect(() => {
+    if (autoFocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  });
   return (
     <>
       <Label
@@ -54,6 +62,7 @@ const TextInput = ({
         animate={{ opacity: [0, 1], x: [-30, 0] }}
         onChange={e => changeHandler(e)}
         max={maximum || 128}
+        ref={inputRef}
         transition={{ duration: 0.55, ease: "easeOut" }}
         type="text"
         value={value}

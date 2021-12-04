@@ -27,6 +27,7 @@ import ViewRouter from "./ViewRouter";
 export type PrivateKey = {
   color: string;
   createdDate: string;
+  expirationDate?: string;
   fingerprint: string;
   keyType: string;
   userId: string;
@@ -35,6 +36,7 @@ export type PrivateKey = {
 export type PublicKey = {
   color: string;
   createdDate: string;
+  expirationDate?: string;
   fingerprint: string;
   keyType: string;
   revocationFile: string | undefined;

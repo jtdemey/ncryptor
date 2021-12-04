@@ -1,15 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import Datepicker from "./Datepicker";
 
 type RadioBtnGroupProps = {
   label: string;
   selections: string[];
+  selectedValue: string;
+  selectValue: Function;
 };
 
 const Label = styled(motion.label)`
   display: block;
-  margin: 1rem 0 0.5rem;
+  margin: 1.5rem 0 0.5rem;
   color: #cad2c5;
   font-family: "Lato", sans-serif;
   font-size: 1.1rem;
@@ -17,6 +20,7 @@ const Label = styled(motion.label)`
 
 const Container = styled.section`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
 `;
 
@@ -44,11 +48,16 @@ const Input = styled(motion.input)`
   outline: none;
 `;
 
+const dateRegex = new RegExp(
+  /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
+);
+
 const RadioBtnGroup = ({
   label,
-  selections
+  selections,
+  selectedValue,
+  selectValue
 }: RadioBtnGroupProps): JSX.Element => {
-  const [selectedValue, selectValue] = React.useState("");
   return (
     <>
       <Label
@@ -59,17 +68,29 @@ const RadioBtnGroup = ({
       </Label>
       <Container>
         {selections.map(selection => (
-          <BtnGroup>
+          <BtnGroup key={selection}>
             <BtnLabel>{selection}</BtnLabel>
             <Input
-              checked={selection === selectedValue}
-              key={selection}
-              onChange={e => selectValue(e.target.value)}
+              checked={
+                selection === selectedValue ||
+                (selection === "custom" && dateRegex.test(selectedValue))
+              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                selectValue(e.target.value)
+              }
               type="radio"
               value={selection}
             />
           </BtnGroup>
         ))}
+        {(selectedValue === "custom" || dateRegex.test(selectedValue)) && (
+          <Datepicker
+            changeHandler={(e: React.ChangeEvent<HTMLInputElement>) => {
+              e.preventDefault();
+              selectValue(e.target.value);
+            }}
+          />
+        )}
       </Container>
     </>
   );

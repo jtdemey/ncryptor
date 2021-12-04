@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { PublicKey } from "../Main/NcryptorApp";
 import SectionCard from "../Main/SectionCard";
-import GenerateKeyBtn from "../Keyring/GenerateKeyBtn";
 import NoKeysHeader from "../Keyring/NoKeysHeader";
 import ContactsList from "./ContactsList";
 import RefreshKeysBtn from "../Keyring/RefreshKeysBtn";
+import AddContactBtn from "./AddContactBtn";
 
 type ContactsViewProps = {
   publicKeys: PublicKey[];
@@ -29,7 +29,7 @@ const ContactsView = ({
     <section>
       <SectionCard>
 				<BtnBar>
-					<GenerateKeyBtn setView={setView} text="New" />
+					<AddContactBtn setView={setView} text="New" />
 					<RefreshKeysBtn refreshKeys={refreshContacts} />
 				</BtnBar>
         {publicKeys.length < 1 ? (

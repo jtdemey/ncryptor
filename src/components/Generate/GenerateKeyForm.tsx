@@ -1,24 +1,24 @@
 import React from "react";
 import styled from "styled-components";
-import { AppViews } from "../../data/AppViews";
-import { sanitizeInput } from "../../utils/StringSanitizer";
 import Dropdown from "../Form/Dropdown";
 import RadioBtnGroup from "../Form/RadioBtnGroup";
 import TextInput from "../Form/TextInput";
 import BackBtn from "../Main/BackBtn";
 import CancelCreateBtn from "./CancelCreateBtn";
 import GenerateKeySubmitBtn from "./GenerateKeySubmitBtn";
+import { AppViews } from "../../data/AppViews";
+import { sanitizeInput } from "../../utils/StringSanitizer";
 
 type GenerateKeyFormProps = {
   setView: Function;
 };
 
-const Container = styled.article`
+export const Container = styled.article`
   max-width: 400px;
   margin: auto;
 `;
 
-const Header = styled.h2`
+export const Header = styled.h2`
   margin: 0 auto 1.5rem;
   color: #cad2c5;
   font-family: "Lato", sans-serif;
@@ -26,7 +26,7 @@ const Header = styled.h2`
   text-align: center;
 `;
 
-const BtnBar = styled.h2`
+export const BtnBar = styled.h2`
   display: grid;
   grid-template-columns: 1fr 1fr;
 `;
@@ -50,8 +50,6 @@ const parseCurves = (curvesResponse: string): [string, string][] => {
   return curvesString.split(";").map((curve: string) => ds(curve.trim()));
 };
 
-const radioSelections = ["1m", "2m", "6m", "1y", "never", "custom"];
-
 const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
   const initialOptions: [string, string][] = [
     ds("rsa4096"),
@@ -61,6 +59,8 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
   const [dropdownOptions, setDropdownOptions] = React.useState(initialOptions);
   const [userId, setUserId] = React.useState("");
   const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("");
+  const [selectedDate, setSelectedDate] = React.useState("");
+  const radioSelections = ["1m", "2m", "6m", "1y", "never", "custom"];
   React.useEffect(() => {
     executeFetch()
       .then((response: Response) => response.json())
@@ -73,6 +73,7 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
       <BackBtn clickFunc={() => setView(AppViews.Keyring)} />
       <Header>Create a new keypair</Header>
       <TextInput
+        autoFocus={true}
         changeHandler={(e: React.ChangeEvent<HTMLInputElement>) =>
           setUserId(sanitizeInput(e.target.value))
         }
@@ -84,13 +85,18 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
         animationDuration={0.75}
         selections={dropdownOptions}
         label="Algorithm"
-        setValue={(e: React.ChangeEvent<HTMLSelectElement>) => {
-          setSelectedAlgorithm(e.toString());
-        }}
+        setValue={(e: React.ChangeEvent<HTMLSelectElement>) =>
+          setSelectedAlgorithm(e.toString())
+        }
         subLabel="(recommended: rsa4096)"
         selectedValue={selectedAlgorithm}
       />
-      <RadioBtnGroup label="Expiration Date" selections={radioSelections} />
+      <RadioBtnGroup
+        label="Expiration Date"
+        selections={radioSelections}
+        selectedValue={selectedDate}
+        selectValue={setSelectedDate}
+      />
       <BtnBar>
         <GenerateKeySubmitBtn algorithm={selectedAlgorithm} userId={userId} />
         <CancelCreateBtn clickFunc={() => setView(AppViews.Keyring)} />

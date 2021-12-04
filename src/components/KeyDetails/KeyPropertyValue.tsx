@@ -4,6 +4,7 @@ import CopyBtn from "./CopyBtn";
 
 type KeyPropertyValueProps = {
   color: string;
+  showCopyBtn?: boolean;
   text: string;
 };
 
@@ -16,11 +17,12 @@ const Value = styled.h6`
 
 const KeyPropertyValue = ({
   color,
+  showCopyBtn,
   text
 }: KeyPropertyValueProps): JSX.Element => (
   <Value>
     {text}
-    <CopyBtn color={color} value={text} />
+    {showCopyBtn && <CopyBtn color={color} value={text} />}
   </Value>
 );
 

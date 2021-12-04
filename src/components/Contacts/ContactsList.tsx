@@ -38,7 +38,7 @@ const ContactsList = ({
             animate={{ opacity: [0, 1], x: [-50, 0] }}
             key={contact.fingerprint}
             onClick={() => selectContact(contact.fingerprint)}
-            style={{ background: contact.color }}
+            style={{ borderLeft: `0.5rem solid ${contact.color}` }}
             transition={{ duration: 0.25 + 0.1 * i, ease: "easeOut" }}
           >
             <TextContainer>

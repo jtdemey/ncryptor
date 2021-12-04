@@ -5,7 +5,7 @@ import FileInput from "./FileInput";
 import SubmitBtn from "./SubmitBtn";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
-type TextInputProps = {
+type TextAreaInputProps = {
   currentUser: string;
   encryptMode: boolean;
 	recipient?: string;
@@ -44,7 +44,7 @@ const TextAreaInput = ({
   currentUser,
   encryptMode,
 	recipient
-}: TextInputProps): JSX.Element => {
+}: TextAreaInputProps): JSX.Element => {
   const dimensions = useWindowDimensions();
   const textAreaStyle = { height: dimensions.height ? dimensions.height - 350 : "40vh" };
   const [text, setText] = React.useState("");

@@ -6,9 +6,10 @@ import SettingsView from "../Settings/SettingsView";
 import KeyringView from "../Keyring/KeyringView";
 import GenerateKeyView from "../Generate/GenerateKeyView";
 import ContactsView from "../Contacts/ContactsView";
+import KeyDetailsView from "../KeyDetails/KeyDetailsView";
+import AddContactView from "../AddContact/AddContactView";
 import { AppViews } from "../../data/AppViews";
 import { PrivateKey, PublicKey } from "./NcryptorApp";
-import KeyDetailsView from "../KeyDetails/KeyDetailsView";
 
 type ViewRouterProps = {
   currentUser: string;
@@ -110,6 +111,10 @@ const getView = ({
           selectContact={selectContact}
           setView={setView}
         />
+      );
+    case AppViews.CreateContact:
+      return (
+        <AddContactView setView={setView} />
       );
     case AppViews.Settings:
       return <SettingsView />;
