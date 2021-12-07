@@ -8,6 +8,7 @@ import CancelCreateBtn from "./CancelCreateBtn";
 import GenerateKeySubmitBtn from "./GenerateKeySubmitBtn";
 import { AppViews } from "../../data/AppViews";
 import { sanitizeInput } from "../../utils/StringSanitizer";
+import ValidationErrorArea from "../Form/ValidationErrorArea";
 
 type GenerateKeyFormProps = {
   setView: Function;
@@ -58,8 +59,10 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
   ];
   const [dropdownOptions, setDropdownOptions] = React.useState(initialOptions);
   const [userId, setUserId] = React.useState("");
-  const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("");
+  const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("rsa4096");
   const [selectedDate, setSelectedDate] = React.useState("");
+  const initialErrors: string[] = [];
+  const [validationErrors, setValidationErrors] = React.useState(initialErrors);
   const radioSelections = ["1m", "2m", "6m", "1y", "never", "custom"];
   React.useEffect(() => {
     executeFetch()
@@ -72,6 +75,7 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
     <Container>
       <BackBtn clickFunc={() => setView(AppViews.Keyring)} />
       <Header>Create a new keypair</Header>
+      <ValidationErrorArea errors={validationErrors} />
       <TextInput
         autoFocus={true}
         changeHandler={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -98,7 +102,12 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
         selectValue={setSelectedDate}
       />
       <BtnBar>
-        <GenerateKeySubmitBtn algorithm={selectedAlgorithm} userId={userId} />
+        <GenerateKeySubmitBtn
+          algorithm={selectedAlgorithm}
+          expirationDate={selectedDate}
+          userId={userId}
+          setValidationErrors={setValidationErrors}
+        />
         <CancelCreateBtn clickFunc={() => setView(AppViews.Keyring)} />
       </BtnBar>
     </Container>

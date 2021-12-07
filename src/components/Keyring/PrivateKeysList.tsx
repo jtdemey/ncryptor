@@ -1,13 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { KeyTypeDisplayNames } from "../../data/KeyTypeDisplayNames";
-import { PrivateKey } from "./../Main/NcryptorApp";
 import KeysListLegend from "./KeysListLegend";
+import { PrivateKey } from "./../Main/NcryptorApp";
+import { applyEllipsis } from "../../utils/StringFormatters";
 
 type PrivateKeysListProps = {
   privateKeys: Array<PrivateKey>;
-	selectPrivateKey: Function;
+  selectPrivateKey: Function;
 };
 
 export const List = styled.ul`
@@ -25,7 +25,7 @@ export const ListItem = styled(motion.li)`
   cursor: pointer;
   font-size: 1rem;
   font-weight: bold;
-	opacity: 0;
+  opacity: 0;
 `;
 
 export const TextContainer = styled.div`
@@ -57,20 +57,12 @@ export const KeyTypeLabel = styled.div`
   text-align: center;
 `;
 
-const getDisplayUserId = (userId: string): string =>
-	userId.length > 9
-		? `${userId.substring(0, 9)}...`
-		: userId;
-
 const getDisplayFingerprint = (fingerprint: string): string =>
   fingerprint.substring(fingerprint.length - 8, fingerprint.length);
 
-const getKeyTypeDisplayName = (keyType: string): string =>
-  KeyTypeDisplayNames.filter(x => x.keyType === keyType)[0]?.display ?? "";
-
 const PrivateKeysList = ({
   privateKeys,
-	selectPrivateKey
+  selectPrivateKey
 }: PrivateKeysListProps): JSX.Element => {
   return (
     <>
@@ -80,18 +72,16 @@ const PrivateKeysList = ({
           <ListItem
             animate={{ opacity: [0, 1], x: [-50, 0] }}
             key={privateKey.fingerprint}
-						onClick={() => selectPrivateKey(privateKey.fingerprint)}
+            onClick={() => selectPrivateKey(privateKey.fingerprint)}
             style={{ background: privateKey.color }}
             transition={{ duration: 0.25 + 0.1 * i, ease: "easeOut" }}
           >
             <TextContainer>
-              <UserIdLabel>{getDisplayUserId(privateKey.userId)}</UserIdLabel>
+              <UserIdLabel>{applyEllipsis(privateKey.userId, 9)}</UserIdLabel>
               <KeyThumbprint>
                 {getDisplayFingerprint(privateKey.fingerprint)}
               </KeyThumbprint>
-              <KeyTypeLabel>
-                {getKeyTypeDisplayName(privateKey.keyType)}
-              </KeyTypeLabel>
+              <KeyTypeLabel>{privateKey.keyType.toUpperCase()}</KeyTypeLabel>
             </TextContainer>
           </ListItem>
         ))}

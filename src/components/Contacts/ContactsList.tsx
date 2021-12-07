@@ -9,7 +9,6 @@ import {
   KeyTypeLabel
 } from "../Keyring/PrivateKeysList";
 import KeysListLegend from "../Keyring/KeysListLegend";
-import { KeyTypeDisplayNames } from "../../data/KeyTypeDisplayNames";
 
 type ContactsListProps = {
   contacts: Array<PublicKey>;
@@ -21,9 +20,6 @@ const getDisplayUserId = (userId: string): string =>
 
 const getDisplayFingerprint = (fingerprint: string): string =>
   fingerprint.substring(fingerprint.length - 8, fingerprint.length);
-
-const getKeyTypeDisplayName = (keyType: string): string =>
-  KeyTypeDisplayNames.filter(x => x.keyType === keyType)[0]?.display ?? "";
 
 const ContactsList = ({
   contacts,
@@ -47,7 +43,7 @@ const ContactsList = ({
                 {getDisplayFingerprint(contact.fingerprint)}
               </KeyThumbprint>
               <KeyTypeLabel>
-                {getKeyTypeDisplayName(contact.keyType)}
+                {contact.keyType.toUpperCase()}
               </KeyTypeLabel>
             </TextContainer>
           </ListItem>

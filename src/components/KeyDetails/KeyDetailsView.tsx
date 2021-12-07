@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { PrivateKey } from "../Main/NcryptorApp";
+import BackBtn from "../Main/BackBtn";
 import SectionCard from "../Main/SectionCard";
 import KeyDetailsGroup from "./KeyDetailsGroup";
 import KeyHeader from "./KeyHeader";
+import { AppViews } from "../../data/AppViews";
+import { PrivateKey } from "../Main/NcryptorApp";
 
 type KeyDetailsViewProps = {
   privateKey: PrivateKey;
+  setView: Function;
 };
 
 const Container = styled.section`
@@ -20,9 +23,13 @@ const DetailsContainer = styled.section`
   transform: translateY(-1.5rem);
 `;
 
-const KeyDetailsView = ({ privateKey }: KeyDetailsViewProps): JSX.Element => (
+const KeyDetailsView = ({
+  privateKey,
+  setView
+}: KeyDetailsViewProps): JSX.Element => (
   <Container>
     <SectionCard>
+      <BackBtn clickFunc={() => setView(AppViews.Keyring)} />
       <KeyHeader
         color={privateKey.color}
         fingerprint={privateKey.fingerprint}

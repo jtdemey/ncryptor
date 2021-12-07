@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import FileInput from "../Encrypt/FileInput";
 
 type PublicKeyInputProps = {
   setText: Function;
@@ -41,7 +40,6 @@ const PublicKeyInput = ({
     setText(e.target.value);
   return (
     <Container>
-      <FileInput />
       <TextArea
         animate={{ x: [-30, 0] }}
         onChange={e => handleTextChange(e)}

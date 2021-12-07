@@ -1,8 +1,8 @@
 import React from "react";
 import BackBtn from "../Main/BackBtn";
-import CancelCreateBtn from "../Generate/CancelCreateBtn";
 import AddContactSubmitBtn from "./AddContactSubmitBtn";
 import PublicKeyInput from "./PublicKeyInput";
+import FileInput from "../Encrypt/FileInput";
 import { Container, Header, BtnBar } from "../Generate/GenerateKeyForm";
 import { AppViews } from "../../data/AppViews";
 import { sanitizeInput } from "../../utils/StringSanitizer";
@@ -19,8 +19,8 @@ const AddContactForm = ({ setView }: AddContactFormProps): JSX.Element => {
       <Header>Add a contact's public key</Header>
       <PublicKeyInput setText={setPublicKeyText} text={publicKeyText} />
       <BtnBar>
+        <FileInput setText={setPublicKeyText} />
         <AddContactSubmitBtn publicKey={publicKeyText} />
-        <CancelCreateBtn clickFunc={() => setView(AppViews.Keyring)} />
       </BtnBar>
     </Container>
   );

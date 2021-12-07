@@ -20,7 +20,7 @@ const Text = styled(motion.h1)`
   top: 38px;
   left: 30px;
   margin: 0.75rem;
-  padding-left: 1.25rem;
+  padding-left: 3rem;
   color: #cad2c5;
   font-family: "Lato", sans-serif;
   font-size: 1.25rem;
@@ -33,7 +33,7 @@ const KeyHeader = ({ color, fingerprint }: KeyHeaderProps): JSX.Element => (
       color={shiftLightness(color, 10)}
       icon={faKey}
       style={{
-        transform: `rotate(-45deg) scale(-1, 1) translate(-20px, -5px)`
+        transform: `rotate(-45deg) scale(-1, 1) translate(-40px, 20px)`
       }}
       width="160px"
     />

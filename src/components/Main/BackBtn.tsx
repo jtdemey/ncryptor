@@ -11,6 +11,7 @@ const Button = styled.div`
   width: 2rem;
   position: absolute;
   margin: 0;
+  z-index: 1;
 `;
 
 const BackBtn = ({ clickFunc }: BackBtnProps): JSX.Element => (

@@ -61,7 +61,7 @@ const TextAreaInput = ({
         value={text}
       />
       <BtnRow>
-				<FileInput />
+				<FileInput setText={setText} />
         <SubmitBtn
 					currentUser={currentUser}
           endpoint={encryptMode ? "encrypt" : "decrypt"}

@@ -101,6 +101,7 @@ const getView = ({
           privateKey={
             privateKeys.filter(k => k.fingerprint === selectedPrivateKey)[0]
           }
+          setView={setView}
         />
       );
     case AppViews.Contacts:

@@ -44,8 +44,8 @@ export type PublicKey = {
 };
 
 const Container = styled.div`
-	display: grid;
-	grid-template-rows: 3.5rem 1fr 106px;
+  display: grid;
+  grid-template-rows: 3.5rem 1fr 106px;
   position: fixed;
   top: 0;
   left: 0;
@@ -77,23 +77,25 @@ const executePublicKeysFetch = (): Promise<Response> =>
 const NcryptorApp = (): JSX.Element => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const dispatchSetView = (view: AppViews) => dispatch(setView(view));
-  const refreshPrivateKeys = (): void => {
+  const refreshPrivateKeys = (cb?: Function): void => {
     executePrivateKeysFetch()
       .then((response: Response) => response.json())
       .then((result: KeysResponse) => {
         const parsedKeys = parsePrivateKeysResponse(result).keys;
         dispatch(setPrivateKeys(parsedKeys));
         dispatch(setCurrentUser(parsedKeys[0].userId));
+        cb && cb();
       });
   };
   React.useEffect(() => refreshPrivateKeys(), []);
-	const refreshContacts = (): void => {
+  const refreshContacts = (cb?: Function): void => {
     executePublicKeysFetch()
       .then((response: Response) => response.json())
-      .then((result: KeysResponse) =>
-        dispatch(setPublicKeys(parsePublicKeysResponse(result).keys))
-      );
-	};
+      .then((result: KeysResponse) => {
+        dispatch(setPublicKeys(parsePublicKeysResponse(result).keys));
+        cb && cb();
+      });
+  };
   React.useEffect(() => refreshContacts(), []);
   return (
     <Container>
@@ -103,8 +105,8 @@ const NcryptorApp = (): JSX.Element => {
         currentUser={state.currentUser}
         privateKeys={state.privateKeys}
         publicKeys={state.publicKeys}
-				refreshContacts={refreshContacts}
-				refreshKeys={refreshPrivateKeys}
+        refreshContacts={refreshContacts}
+        refreshKeys={refreshPrivateKeys}
         selectContact={(fingerprint: string) =>
           dispatch(selectContact(fingerprint))
         }
