@@ -15,7 +15,6 @@ export const genKey = async (
             console.error(error);
             reject(error);
           }
-          console.log(privateKey.toString());
           resolve(privateKey.toString());
         }
       );

@@ -3,22 +3,22 @@ import { AppViews } from "../data/AppViews";
 import { AppAction } from "./Reducer";
 
 export const ActionNames = {
-  SelectContact: "selectContact",
-  SelectPrivateKey: "selectPrivateKey",
+  SelectKey: "selectKey",
   SetCurrentUser: "setCurrentUser",
   SetPrivateKeys: "setPrivateKeys",
   SetPublicKeys: "setPublicKeys",
   SetView: "setView"
 };
 
-export const selectContact = (fingerprint: string): AppAction => ({
-  type: ActionNames.SelectContact,
-  payload: fingerprint
-});
-
-export const selectPrivateKey = (fingerprint: string): AppAction => ({
-  type: ActionNames.SelectPrivateKey,
-  payload: fingerprint
+export const selectKey = (
+  fingerprint: string,
+  isPrivate: boolean
+): AppAction => ({
+  type: ActionNames.SelectKey,
+  payload: {
+    fingerprint,
+    isKeyPrivate: isPrivate
+  }
 });
 
 export const setCurrentUser = (userId: string): AppAction => ({
@@ -38,5 +38,5 @@ export const setPublicKeys = (keys: PublicKey[]): AppAction => ({
 
 export const setView = (view: AppViews): AppAction => ({
   type: ActionNames.SetView,
-  payload: view 
+  payload: view
 });

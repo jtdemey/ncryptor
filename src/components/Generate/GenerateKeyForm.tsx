@@ -11,6 +11,7 @@ import { sanitizeInput } from "../../utils/StringSanitizer";
 import ValidationErrorArea from "../Form/ValidationErrorArea";
 
 type GenerateKeyFormProps = {
+  refreshKeys: Function;
   setView: Function;
 };
 
@@ -51,7 +52,10 @@ const parseCurves = (curvesResponse: string): [string, string][] => {
   return curvesString.split(";").map((curve: string) => ds(curve.trim()));
 };
 
-const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
+const GenerateKeyForm = ({
+  refreshKeys,
+  setView
+}: GenerateKeyFormProps): JSX.Element => {
   const initialOptions: [string, string][] = [
     ds("rsa4096"),
     ds("rsa2048"),
@@ -106,7 +110,9 @@ const GenerateKeyForm = ({ setView }: GenerateKeyFormProps): JSX.Element => {
           algorithm={selectedAlgorithm}
           expirationDate={selectedDate}
           userId={userId}
+          refreshKeys={refreshKeys}
           setValidationErrors={setValidationErrors}
+          setView={setView}
         />
         <CancelCreateBtn clickFunc={() => setView(AppViews.Keyring)} />
       </BtnBar>

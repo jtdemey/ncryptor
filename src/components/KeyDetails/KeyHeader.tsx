@@ -8,11 +8,25 @@ import { shiftLightness } from "../../utils/ColorUtils";
 type KeyHeaderProps = {
   color: string;
   fingerprint: string;
+  isKeyPrivate: boolean;
 };
 
 const Container = styled.div`
   display: flex;
-	position: relative;
+  position: relative;
+  color: #cad2c5;
+  font-family: "Lato", sans-serif;
+`;
+
+const PrivacyLabel = styled(motion.span)`
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  padding: 0.25rem;
+  border-radius: 3px;
+  font-family: "Lora", serif;
+  font-size: 0.9rem;
+  z-index: 1;
 `;
 
 const Text = styled(motion.h1)`
@@ -21,14 +35,23 @@ const Text = styled(motion.h1)`
   left: 30px;
   margin: 0.75rem;
   padding-left: 3rem;
-  color: #cad2c5;
-  font-family: "Lato", sans-serif;
   font-size: 1.25rem;
   letter-spacing: 0.2rem;
 `;
 
-const KeyHeader = ({ color, fingerprint }: KeyHeaderProps): JSX.Element => (
+const KeyHeader = ({
+  color,
+  fingerprint,
+  isKeyPrivate
+}: KeyHeaderProps): JSX.Element => (
   <Container>
+    <PrivacyLabel
+      animate={{ opacity: [0, 1], x: [-20, 0] }}
+      style={{ background: isKeyPrivate ? "#4C1E4F" : "#32021F" }}
+      transition={{ delay: 0.25, duration: 0.45, ease: "easeOut" }}
+    >
+      {isKeyPrivate ? "Private" : "Public"}
+    </PrivacyLabel>
     <FontAwesomeIcon
       color={shiftLightness(color, 10)}
       icon={faKey}

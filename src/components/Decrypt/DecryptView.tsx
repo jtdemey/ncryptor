@@ -21,25 +21,30 @@ const InputRow = styled(motion.div)`
 const DecryptView = ({
   currentUser,
   privateKeys,
-  setCurrentUser,
+  setCurrentUser
 }: DecryptViewProps): JSX.Element => {
-	const recipientFingerprint = privateKeys.filter((key: PrivateKey) => key.userId === currentUser)[0]?.fingerprint;
-	return (
-		<SectionCard>
-      <InputRow animate={{ x: [-50, 0] }} transition={{ duration: 0.25, ease: "easeOut" }}>
-				<SelectionLabel text="To: " />
-				<SenderSelection
-					currentUser={currentUser}
-					privateKeys={privateKeys}
-					setCurrentUser={setCurrentUser}
-				/>
-			</InputRow>
-			<TextAreaInput
-				currentUser={recipientFingerprint || "unknown"}
-				encryptMode={false}
-			/>
-		</SectionCard>
-	);
+  const recipientFingerprint = privateKeys.filter(
+    (key: PrivateKey) => key.userId === currentUser
+  )[0]?.fingerprint;
+  return (
+    <SectionCard>
+      <InputRow
+        animate={{ x: [-50, 0] }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+      >
+        <SelectionLabel text="To: " />
+        <SenderSelection
+          currentUser={currentUser}
+          privateKeys={privateKeys}
+          setCurrentUser={setCurrentUser}
+        />
+      </InputRow>
+      <TextAreaInput
+        currentUser={recipientFingerprint || "unknown"}
+        encryptMode={false}
+      />
+    </SectionCard>
+  );
 };
 
 export default DecryptView;

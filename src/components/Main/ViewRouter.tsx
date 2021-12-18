@@ -13,14 +13,13 @@ import { PrivateKey, PublicKey } from "./NcryptorApp";
 
 type ViewRouterProps = {
   currentUser: string;
+  isKeyPrivate: boolean;
   privateKeys: PrivateKey[];
   publicKeys: PublicKey[];
   refreshContacts: Function;
   refreshKeys: Function;
-  selectContact: Function;
-  selectedContact: string;
-  selectPrivateKey: Function;
-  selectedPrivateKey: string;
+  selectKey: Function;
+  selectedKey: string;
   setCurrentUser: Function;
   setView: Function;
   view: AppViews;
@@ -54,14 +53,13 @@ const View = styled.div`
 
 const getView = ({
   currentUser,
+  isKeyPrivate,
   privateKeys,
   publicKeys,
   refreshContacts,
   refreshKeys,
-  selectContact,
-  selectedContact,
-  selectPrivateKey,
-  selectedPrivateKey,
+  selectKey,
+  selectedKey,
   setCurrentUser,
   setView,
   view
@@ -89,18 +87,21 @@ const getView = ({
         <KeyringView
           privateKeys={privateKeys}
           refreshKeys={refreshKeys}
-          selectPrivateKey={selectPrivateKey}
+          selectKey={selectKey}
           setView={setView}
         />
       );
     case AppViews.GenerateKey:
-      return <GenerateKeyView setView={setView} />;
+      return <GenerateKeyView refreshKeys={refreshKeys} setView={setView} />;
     case AppViews.KeyDetails:
+      const currentKey = isKeyPrivate
+        ? privateKeys.filter(k => k.fingerprint === selectedKey)[0]
+        : publicKeys.filter(k => k.fingerprint === selectedKey)[0];
       return (
         <KeyDetailsView
-          privateKey={
-            privateKeys.filter(k => k.fingerprint === selectedPrivateKey)[0]
-          }
+          currentKey={currentKey}
+          isKeyPrivate={isKeyPrivate}
+          refreshKeys={refreshKeys}
           setView={setView}
         />
       );
@@ -109,14 +110,12 @@ const getView = ({
         <ContactsView
           publicKeys={publicKeys}
           refreshContacts={refreshContacts}
-          selectContact={selectContact}
+          selectKey={selectKey}
           setView={setView}
         />
       );
     case AppViews.CreateContact:
-      return (
-        <AddContactView setView={setView} />
-      );
+      return <AddContactView setView={setView} />;
     case AppViews.Settings:
       return <SettingsView />;
     default:
@@ -126,14 +125,13 @@ const getView = ({
 
 const ViewRouter = ({
   currentUser,
+  isKeyPrivate,
   privateKeys,
   publicKeys,
   refreshContacts,
   refreshKeys,
-  selectContact,
-  selectedContact,
-  selectPrivateKey,
-  selectedPrivateKey,
+  selectKey,
+  selectedKey,
   setCurrentUser,
   setView,
   view
@@ -142,14 +140,13 @@ const ViewRouter = ({
     <View>
       {getView({
         currentUser,
+        isKeyPrivate,
         privateKeys,
         publicKeys,
         refreshContacts,
         refreshKeys,
-        selectContact,
-        selectedContact,
-        selectPrivateKey,
-        selectedPrivateKey,
+        selectKey,
+        selectedKey,
         setCurrentUser,
         setView,
         view

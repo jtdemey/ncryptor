@@ -3,44 +3,49 @@ import { AppViews } from "../data/AppViews";
 import { ActionNames } from "./Actions";
 
 export type AppAction = {
-	type: string;
-	payload: any;
+  type: string;
+  payload: any;
 };
 
 type AppState = {
-	currentUser: string; 
-	privateKeys: PrivateKey[], 
-	publicKeys: PublicKey[],
-	selectedContact: string,
-	selectedPrivateKey: string,
-	view: AppViews
+  currentUser: string;
+  isKeyPrivate: boolean;
+  privateKeys: PrivateKey[];
+  publicKeys: PublicKey[];
+  selectedKey: string;
+  view: AppViews;
 };
 
 export const initialState: AppState = {
-	currentUser: "",
-	privateKeys: [],
-	publicKeys: [],
-	selectedContact: "",
-	selectedPrivateKey: "",
-	view: AppViews.Encrypt
+  currentUser: "",
+  isKeyPrivate: false,
+  privateKeys: [],
+  publicKeys: [],
+  selectedKey: "",
+  view: AppViews.Encrypt
 };
 
-export const reducer = (state: AppState, { type, payload }: AppAction): AppState => {
-	switch (type) {
-		case ActionNames.SelectContact:
-			return { ...state, selectedContact: payload };
-		case ActionNames.SelectPrivateKey:
-			return { ...state, selectedPrivateKey: payload };
-		case ActionNames.SetCurrentUser:
-			return { ...state, currentUser: payload };
-		case ActionNames.SetPrivateKeys:
-			return { ...state, privateKeys: payload };
-		case ActionNames.SetPublicKeys:
-			return { ...state, publicKeys: payload };
-		case ActionNames.SetView:
-			return { ...state, view: payload };
-		default:
-			console.error(`Unrecognized action type ${type}`);
-			return state;
-	}
+export const reducer = (
+  state: AppState,
+  { type, payload }: AppAction
+): AppState => {
+  switch (type) {
+    case ActionNames.SelectKey:
+      return {
+        ...state,
+        isKeyPrivate: payload.isKeyPrivate,
+        selectedKey: payload.fingerprint
+      };
+    case ActionNames.SetCurrentUser:
+      return { ...state, currentUser: payload };
+    case ActionNames.SetPrivateKeys:
+      return { ...state, privateKeys: payload };
+    case ActionNames.SetPublicKeys:
+      return { ...state, publicKeys: payload };
+    case ActionNames.SetView:
+      return { ...state, view: payload };
+    default:
+      console.error(`Unrecognized action type ${type}`);
+      return state;
+  }
 };

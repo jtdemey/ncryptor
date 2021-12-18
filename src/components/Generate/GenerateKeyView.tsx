@@ -3,12 +3,13 @@ import SectionCard from "../Main/SectionCard";
 import GenerateKeyForm from "./GenerateKeyForm";
 
 type GenerateKeyViewProps = {
+  refreshKeys: Function;
 	setView: Function;
 };
 
-const GenerateKeyView = ({ setView }: GenerateKeyViewProps): JSX.Element => (
+const GenerateKeyView = ({ refreshKeys, setView }: GenerateKeyViewProps): JSX.Element => (
 	<SectionCard>
-		<GenerateKeyForm setView={setView} />
+		<GenerateKeyForm refreshKeys={refreshKeys} setView={setView} />
 	</SectionCard>
 );
 

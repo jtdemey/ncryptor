@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { shiftLightness } from "../../utils/ColorUtils";
 
 type CopyBtnProps = {
-  color: string;
+  color?: string;
   value: string;
 };
 
@@ -21,6 +21,7 @@ let copiedInterval: any = undefined;
 
 const CopyBtn = ({ color, value }: CopyBtnProps): JSX.Element => {
   const [copied, setCopied] = React.useState(false);
+  const btnColor = color ?? "hsl(0, 0%, 5%)"
   React.useEffect(() => {
 		if(copied) {
 			copiedInterval = setTimeout(() => {
@@ -35,10 +36,10 @@ const CopyBtn = ({ color, value }: CopyBtnProps): JSX.Element => {
         navigator.clipboard.writeText(value);
         setCopied(true);
       }}
-      style={{ background: shiftLightness(color, -10) }}
+      style={{ background: shiftLightness(btnColor, -10) }}
     >
       <FontAwesomeIcon
-        color={shiftLightness(color, 30)}
+        color={shiftLightness(btnColor, 30)}
         icon={copied ? faCheck : faCopy}
         style={{ transform: "translateY(2px)" }}
         width="18px"

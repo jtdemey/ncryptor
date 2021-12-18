@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { executeFetch } from "../../client/ApiClient";
+import { AppViews } from "../../data/AppViews";
 
 type GenerateKeySubmitBtnProps = {
   algorithm: string;
   expirationDate: string;
   userId: string;
+  refreshKeys: Function;
   setValidationErrors: Function;
+  setView: Function;
 };
 
 export const Button = styled.div`
@@ -27,26 +31,11 @@ const dateRegex = new RegExp(
   /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
 );
 
-const executeFetch = (
-  userId: string,
-  algorithm: string,
-  expirationDate: string
-): Promise<Response> =>
-  fetch(`${window.location.href}api/genkey`, {
-    method: "post",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ userId, algorithm, expirationDate })
-  });
-
 const validateInput = (
   algorithm: string,
   expirationDate: string,
   userId: string
 ): string[] => {
-    console.log(algorithm)
   const validationErrors: string[] = [];
   if (!userId) {
     validationErrors.push("User ID is required.");
@@ -70,7 +59,9 @@ const GenerateKeySubmitBtn = ({
   algorithm,
   expirationDate,
   userId,
-  setValidationErrors
+  refreshKeys,
+  setValidationErrors,
+  setView
 }: GenerateKeySubmitBtnProps): JSX.Element => {
   const [loading, setLoading] = React.useState(false);
   const clickFunc = () => {
@@ -80,9 +71,13 @@ const GenerateKeySubmitBtn = ({
       return;
     }
     setLoading(true);
-    executeFetch(userId, algorithm, expirationDate)
+    executeFetch("genkey", { userId, algorithm, expirationDate })
       .then((response: Response) => response.json())
-      .then(() => setLoading(false));
+      .then((response: any) => {
+        setLoading(false);
+        setView(AppViews.Keyring);
+        refreshKeys();
+      })
   };
   return (
     <Button onClick={() => clickFunc()}>{loading ? "..." : "Generate"}</Button>

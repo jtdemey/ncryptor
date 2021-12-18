@@ -7,7 +7,7 @@ import { applyEllipsis } from "../../utils/StringFormatters";
 
 type PrivateKeysListProps = {
   privateKeys: Array<PrivateKey>;
-  selectPrivateKey: Function;
+  selectKey: Function;
 };
 
 export const List = styled.ul`
@@ -62,7 +62,7 @@ const getDisplayFingerprint = (fingerprint: string): string =>
 
 const PrivateKeysList = ({
   privateKeys,
-  selectPrivateKey
+  selectKey
 }: PrivateKeysListProps): JSX.Element => {
   return (
     <>
@@ -72,7 +72,7 @@ const PrivateKeysList = ({
           <ListItem
             animate={{ opacity: [0, 1], x: [-50, 0] }}
             key={privateKey.fingerprint}
-            onClick={() => selectPrivateKey(privateKey.fingerprint)}
+            onClick={() => selectKey(privateKey.fingerprint, true)}
             style={{ background: privateKey.color }}
             transition={{ duration: 0.25 + 0.1 * i, ease: "easeOut" }}
           >

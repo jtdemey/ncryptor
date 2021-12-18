@@ -11,7 +11,7 @@ import RefreshKeysBtn from "./RefreshKeysBtn";
 type KeyringViewProps = {
   privateKeys: PrivateKey[];
   refreshKeys: Function;
-  selectPrivateKey: Function;
+  selectKey: Function;
   setView: Function;
 };
 
@@ -23,18 +23,18 @@ const BtnBar = styled.div`
 const renderContent = (
   loading: boolean,
   privateKeys: PrivateKey[],
-  selectPrivateKey: Function
+  selectKey: Function
 ) => {
   if (loading) {
     return <LoadingIndicator />;
   }
   if (privateKeys.length < 1) {
-    return <NoKeysHeader />;
+    return <NoKeysHeader isPrivate={true} />;
   }
   return (
     <PrivateKeysList
       privateKeys={privateKeys}
-      selectPrivateKey={selectPrivateKey}
+      selectKey={selectKey}
     />
   );
 };
@@ -42,7 +42,7 @@ const renderContent = (
 const KeyringView = ({
   privateKeys,
   refreshKeys,
-  selectPrivateKey,
+  selectKey,
   setView
 }: KeyringViewProps): JSX.Element => {
   const [loading, setLoading] = React.useState(false);
@@ -57,7 +57,7 @@ const KeyringView = ({
           <GenerateKeyBtn setView={setView} />
           <RefreshKeysBtn refreshKeys={refreshHandler} />
         </BtnBar>
-        {renderContent(loading, privateKeys, selectPrivateKey)}
+        {renderContent(loading, privateKeys, selectKey)}
       </SectionCard>
     </section>
   );

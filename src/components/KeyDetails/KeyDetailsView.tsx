@@ -4,11 +4,16 @@ import BackBtn from "../Main/BackBtn";
 import SectionCard from "../Main/SectionCard";
 import KeyDetailsGroup from "./KeyDetailsGroup";
 import KeyHeader from "./KeyHeader";
+import DeleteKeyBtn from "./DeleteKeyBtn";
 import { AppViews } from "../../data/AppViews";
 import { PrivateKey } from "../Main/NcryptorApp";
+import ConfirmModal from "./ConfirmModal";
+import { executeFetch } from "../../client/ApiClient";
 
 type KeyDetailsViewProps = {
-  privateKey: PrivateKey;
+  currentKey: PrivateKey;
+  isKeyPrivate: boolean;
+  refreshKeys: Function;
   setView: Function;
 };
 
@@ -24,47 +29,94 @@ const DetailsContainer = styled.section`
 `;
 
 const KeyDetailsView = ({
-  privateKey,
+  currentKey,
+  isKeyPrivate,
+  refreshKeys,
   setView
-}: KeyDetailsViewProps): JSX.Element => (
-  <Container>
-    <SectionCard>
-      <BackBtn clickFunc={() => setView(AppViews.Keyring)} />
-      <KeyHeader
-        color={privateKey.color}
-        fingerprint={privateKey.fingerprint}
+}: KeyDetailsViewProps): JSX.Element => {
+  const [showingModal, setShowingModal] = React.useState(false);
+  return (
+    <Container>
+      <ConfirmModal
+        cancelFunction={() => setShowingModal(false)}
+        confirmFunction={() =>
+          executeFetch(
+            isKeyPrivate ? "deleteprivatekeys" : "deletepublickeys",
+            {
+              fingerprint: currentKey.fingerprint
+            }
+          )
+            .then((response: Response) => response.json())
+            .then((response: any) => {
+              console.log(response);
+              if (response.status && response.status === 400) {
+                console.error(response.text);
+                return;
+              }
+              setShowingModal(false);
+              setView(isKeyPrivate ? AppViews.Keyring : AppViews.Contacts);
+              refreshKeys();
+            })
+        }
+        fingerprint={currentKey.fingerprint}
+        isKeyPrivate={isKeyPrivate}
+        isVisible={showingModal}
       />
-      <DetailsContainer>
-        <KeyDetailsGroup
-          color={privateKey.color}
-          labelText="User ID"
-          showCopyBtn={true}
-          valueText={privateKey.userId}
+      <SectionCard>
+        <BackBtn
+          clickFunc={() =>
+            setView(isKeyPrivate ? AppViews.Keyring : AppViews.Contacts)
+          }
         />
-        <KeyDetailsGroup
-          color={privateKey.color}
-          labelText="Fingerprint"
-          showCopyBtn={true}
-          valueText={privateKey.fingerprint}
+        <KeyHeader
+          color={currentKey.color}
+          fingerprint={currentKey.fingerprint}
+          isKeyPrivate={isKeyPrivate}
         />
-        <KeyDetailsGroup
-          color={privateKey.color}
-          labelText="Created Date"
-          valueText={privateKey.createdDate}
-        />
-        <KeyDetailsGroup
-          color={privateKey.color}
-          labelText="Expiration Date"
-          valueText={privateKey.expirationDate ?? "Never"}
-        />
-        <KeyDetailsGroup
-          color={privateKey.color}
-          labelText="Key Type"
-          valueText={privateKey.keyType}
-        />
-      </DetailsContainer>
-    </SectionCard>
-  </Container>
-);
+        <DetailsContainer>
+          <KeyDetailsGroup
+            color={currentKey.color}
+            labelText="User ID"
+            showCopyBtn={true}
+            valueText={currentKey.userId}
+          />
+          <KeyDetailsGroup
+            animationDelay={0.1}
+            color={currentKey.color}
+            labelText="Fingerprint"
+            showCopyBtn={true}
+            valueText={currentKey.fingerprint}
+          />
+          <KeyDetailsGroup
+            animationDelay={0.2}
+            color={currentKey.color}
+            labelText="Abridged fingerprint"
+            showCopyBtn={true}
+            valueText={currentKey.fingerprint.substring(
+              currentKey.fingerprint.length - 8,
+              currentKey.fingerprint.length
+            )}
+          />
+          <KeyDetailsGroup
+            animationDelay={0.3}
+            labelText="Created Date"
+            valueText={currentKey.createdDate}
+          />
+          <KeyDetailsGroup
+            animationDelay={0.4}
+            labelText="Expiration Date"
+            valueText={currentKey.expirationDate ?? "Never"}
+          />
+          <KeyDetailsGroup
+            animationDelay={0.5}
+            labelText="Key Type"
+            valueText={currentKey.keyType}
+          />
+          <DeleteKeyBtn showModal={() => setShowingModal(true)} />
+        </DetailsContainer>
+      </SectionCard>
+    </Container>
+  );
+};
 
 export default KeyDetailsView;

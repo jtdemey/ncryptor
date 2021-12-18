@@ -1,17 +1,17 @@
 import gpg from "gpg";
 
-export const getCurves = async (): Promise<string> => {
+export const deletePublicKey = async (publicKey: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     try {
       gpg.call(
         "",
-        ["--with-colons", "--list-config", "curve"],
-        (error: object, curves: string) => {
+        ["--delete-keys", publicKey],
+        (error: object, response: Buffer) => {
           if (error) {
             console.error(error);
             reject(error);
           }
-          resolve(curves.toString());
+          resolve(response.toString());
         }
       );
     } catch (e) {

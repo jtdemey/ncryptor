@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type NoKeysHeaderProps = {
+  isPrivate: boolean;
   text?: string;
 };
 
@@ -13,8 +14,8 @@ const Header = styled.h2`
   text-align: center;
 `;
 
-const NoKeysHeader = ({ text }: NoKeysHeaderProps): JSX.Element => (
-  <Header>{text || "No private keys found"}</Header>
+const NoKeysHeader = ({ isPrivate, text }: NoKeysHeaderProps): JSX.Element => (
+  <Header>{text || `No ${isPrivate ? "private" : "public"} keys found`}</Header>
 );
 
 export default NoKeysHeader;

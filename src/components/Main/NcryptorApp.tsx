@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { AppViews } from "../../data/AppViews";
 import {
-  selectContact,
-  selectPrivateKey,
+  selectKey,
   setCurrentUser,
   setPrivateKeys,
   setPublicKeys,
@@ -103,19 +102,16 @@ const NcryptorApp = (): JSX.Element => {
       <SettingsGear setView={dispatchSetView} />
       <ViewRouter
         currentUser={state.currentUser}
+        isKeyPrivate={state.isKeyPrivate}
         privateKeys={state.privateKeys}
         publicKeys={state.publicKeys}
         refreshContacts={refreshContacts}
         refreshKeys={refreshPrivateKeys}
-        selectContact={(fingerprint: string) =>
-          dispatch(selectContact(fingerprint))
-        }
-        selectedContact={state.selectedContact}
-        selectPrivateKey={(fingerprint: string) => {
-          dispatch(selectPrivateKey(fingerprint));
+        selectKey={(fingerprint: string, isPrivate: boolean) => {
+          dispatch(selectKey(fingerprint, isPrivate));
           dispatch(setView(AppViews.KeyDetails));
         }}
-        selectedPrivateKey={state.selectedPrivateKey}
+        selectedKey={state.selectedKey}
         setCurrentUser={(userId: string) => dispatch(setCurrentUser(userId))}
         setView={dispatchSetView}
         view={state.view}

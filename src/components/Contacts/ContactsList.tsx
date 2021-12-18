@@ -12,7 +12,7 @@ import KeysListLegend from "../Keyring/KeysListLegend";
 
 type ContactsListProps = {
   contacts: Array<PublicKey>;
-  selectContact: Function;
+  selectKey: Function;
 };
 
 const getDisplayUserId = (userId: string): string =>
@@ -23,7 +23,7 @@ const getDisplayFingerprint = (fingerprint: string): string =>
 
 const ContactsList = ({
   contacts,
-  selectContact
+  selectKey
 }: ContactsListProps): JSX.Element => {
   return (
     <>
@@ -33,7 +33,7 @@ const ContactsList = ({
           <ListItem
             animate={{ opacity: [0, 1], x: [-50, 0] }}
             key={contact.fingerprint}
-            onClick={() => selectContact(contact.fingerprint)}
+            onClick={() => selectKey(contact.fingerprint, false)}
             style={{ borderLeft: `0.5rem solid ${contact.color}` }}
             transition={{ duration: 0.25 + 0.1 * i, ease: "easeOut" }}
           >

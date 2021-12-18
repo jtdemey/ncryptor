@@ -3,13 +3,15 @@ import KeyPropertyLabel from "./KeyPropertyLabel";
 import KeyPropertyValue from "./KeyPropertyValue";
 
 type KeyDetailsGroupProps = {
-  color: string;
+  animationDelay?: number;
+  color?: string;
   labelText: string;
   showCopyBtn?: boolean;
   valueText: string;
 };
 
 const KeyDetailsGroup = ({
+  animationDelay,
   color,
   labelText,
   showCopyBtn,
@@ -17,7 +19,12 @@ const KeyDetailsGroup = ({
 }: KeyDetailsGroupProps): JSX.Element => (
   <article>
     <KeyPropertyLabel text={labelText} />
-    <KeyPropertyValue color={color} showCopyBtn={showCopyBtn} text={valueText} />
+    <KeyPropertyValue
+      animationDelay={animationDelay ?? 0}
+      color={color}
+      showCopyBtn={showCopyBtn}
+      text={valueText}
+    />
   </article>
 );
 

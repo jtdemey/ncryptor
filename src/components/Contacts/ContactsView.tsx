@@ -11,7 +11,7 @@ import LoadingIndicator from "../Main/LoadingIndicator";
 type ContactsViewProps = {
   publicKeys: PublicKey[];
   refreshContacts: Function;
-  selectContact: Function;
+  selectKey: Function;
   setView: Function;
 };
 
@@ -23,21 +23,21 @@ const BtnBar = styled.div`
 const renderContent = (
   loading: boolean,
   publicKeys: PublicKey[],
-  selectContact: Function
+  selectKey: Function
 ) => {
   if (loading) {
     return <LoadingIndicator />;
   }
   if (publicKeys.length < 1) {
-    return <NoKeysHeader />;
+    return <NoKeysHeader isPrivate={false} />;
   }
-  return <ContactsList contacts={publicKeys} selectContact={selectContact} />;
+  return <ContactsList contacts={publicKeys} selectKey={selectKey} />;
 };
 
 const ContactsView = ({
   publicKeys,
   refreshContacts,
-  selectContact,
+  selectKey,
   setView
 }: ContactsViewProps): JSX.Element => {
   const [loading, setLoading] = React.useState(false);
@@ -52,7 +52,7 @@ const ContactsView = ({
           <AddContactBtn setView={setView} text="New" />
           <RefreshKeysBtn refreshKeys={refreshHandler} />
         </BtnBar>
-        {renderContent(loading, publicKeys, selectContact)}
+        {renderContent(loading, publicKeys, selectKey)}
       </SectionCard>
     </section>
   );

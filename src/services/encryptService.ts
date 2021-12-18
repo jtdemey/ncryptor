@@ -1,4 +1,4 @@
-import gpg from 'gpg';
+import gpg from "gpg";
 
 export const encryptString = async (
   sender: string,
@@ -10,20 +10,20 @@ export const encryptString = async (
       gpg.encrypt(
         text,
         [
-          '--default-key',
+          "--default-key",
           sender,
-          '--recipient',
+          "--recipient",
           recipient,
-          '--armor',
-          '--trust-model',
-          'always'
+          "--armor",
+          "--trust-model",
+          "always"
         ],
         (error: object, encrypted: Buffer) => {
           if (error) {
             console.error(error);
             reject(error);
           }
-          resolve(encrypted.toString('ascii'));
+          resolve(encrypted.toString("ascii"));
         }
       );
     } catch (e) {

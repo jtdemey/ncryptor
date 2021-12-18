@@ -1,6 +1,6 @@
-import React from 'react';
-import Dropdown from '../Form/Dropdown';
-import { PublicKey } from '../Main/NcryptorApp';
+import React from "react";
+import Dropdown from "../Form/Dropdown";
+import { PublicKey } from "../Main/NcryptorApp";
 
 type RecipientSelectionProps = {
   publicKeys: PublicKey[];
@@ -26,10 +26,9 @@ const RecipientSelection = ({
     <Dropdown
       selections={dropdownSelections}
       label=""
-      setValue={(e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.toString())
-        setRecipient(e.toString());
-      }}
+      setValue={(e: React.ChangeEvent<HTMLSelectElement>) =>
+        setRecipient(e.toString())
+      }
       subLabel=""
       selectedValue={recipient}
     />
