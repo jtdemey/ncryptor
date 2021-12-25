@@ -4,6 +4,7 @@ import { AppViews } from "../../data/AppViews";
 import {
   selectKey,
   setCurrentUser,
+  setErrorText,
   setPrivateKeys,
   setPublicKeys,
   setView
@@ -18,6 +19,8 @@ import Header from "../Header/Header";
 import NavBar from "../Nav/NavBar";
 import SettingsGear from "../Nav/SettingsGear";
 import ViewRouter from "./ViewRouter";
+import { executeFetch } from "../../client/ApiClient";
+import ErrorNotification from "../Error/ErrorNotification";
 
 /*
 {"Ash Gray":"cad2c5","Dark Sea Green":"84a98c","Hookers Green":"52796f","Dark Slate Gray":"354f52","Charcoal":"2f3e46"}
@@ -58,26 +61,12 @@ const Container = styled.div`
   );
 `;
 
-const executeGetRequest = (endpoint: string): Promise<Response> =>
-  fetch(`${window.location.href}api/${endpoint}`, {
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    }
-  });
-
-const executePrivateKeysFetch = (): Promise<Response> =>
-  executeGetRequest("getprivatekeys");
-
-const executePublicKeysFetch = (): Promise<Response> =>
-  executeGetRequest("getpublickeys");
-
 const NcryptorApp = (): JSX.Element => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+  const dispatchSetError = (message: string) => dispatch(setErrorText(message));
   const dispatchSetView = (view: AppViews) => dispatch(setView(view));
   const refreshPrivateKeys = (cb?: Function): void => {
-    executePrivateKeysFetch()
+    executeFetch("getprivatekeys")
       .then((response: Response) => response.json())
       .then((result: KeysResponse) => {
         const parsedKeys = parsePrivateKeysResponse(result).keys;
@@ -88,7 +77,7 @@ const NcryptorApp = (): JSX.Element => {
   };
   React.useEffect(() => refreshPrivateKeys(), []);
   const refreshContacts = (cb?: Function): void => {
-    executePublicKeysFetch()
+    executeFetch("getpublickeys")
       .then((response: Response) => response.json())
       .then((result: KeysResponse) => {
         dispatch(setPublicKeys(parsePublicKeysResponse(result).keys));
@@ -100,6 +89,10 @@ const NcryptorApp = (): JSX.Element => {
     <Container>
       <Header />
       <SettingsGear setView={dispatchSetView} />
+      <ErrorNotification
+        setErrorText={dispatchSetError}
+        text={state.errorText}
+      />
       <ViewRouter
         currentUser={state.currentUser}
         isKeyPrivate={state.isKeyPrivate}
@@ -113,6 +106,7 @@ const NcryptorApp = (): JSX.Element => {
         }}
         selectedKey={state.selectedKey}
         setCurrentUser={(userId: string) => dispatch(setCurrentUser(userId))}
+        setErrorText={dispatchSetError}
         setView={dispatchSetView}
         view={state.view}
       />

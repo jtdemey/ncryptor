@@ -8,7 +8,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 type TextAreaInputProps = {
   currentUser: string;
   encryptMode: boolean;
-	recipient?: string;
+  recipient?: string;
 };
 
 const Container = styled.div`
@@ -43,10 +43,12 @@ const BtnRow = styled.section`
 const TextAreaInput = ({
   currentUser,
   encryptMode,
-	recipient
+  recipient
 }: TextAreaInputProps): JSX.Element => {
   const dimensions = useWindowDimensions();
-  const textAreaStyle = { height: dimensions.height ? dimensions.height - 350 : "40vh" };
+  const textAreaStyle = {
+    height: dimensions.height ? dimensions.height - 350 : "40vh"
+  };
   const [text, setText] = React.useState("");
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.target.value);
@@ -55,18 +57,18 @@ const TextAreaInput = ({
     <Container>
       <TextArea
         animate={{ x: [-30, 0] }}
-        onChange={(e) => handleTextChange(e)}
+        onChange={e => handleTextChange(e)}
         style={textAreaStyle}
         transition={{ duration: 0.45, ease: "easeOut" }}
         value={text}
       />
       <BtnRow>
-				<FileInput setText={setText} />
+        <FileInput setText={setText} />
         <SubmitBtn
-					currentUser={currentUser}
+          currentUser={currentUser}
           endpoint={encryptMode ? "encrypt" : "decrypt"}
           label={btnText}
-					recipient={recipient}
+          recipient={recipient}
           setText={setText}
           text={text}
         />

@@ -3,9 +3,12 @@ type GpgResponse = {
   text: string;
 };
 
-export const handleGpgError = (response: GpgResponse): boolean => {
+export const handleGpgError = (
+  response: GpgResponse,
+  setErrorText: Function
+): boolean => {
   if (response.status === 400) {
-    console.error(response.text);
+    setErrorText(response.text);
     return false;
   }
   return true;

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { executeFetch } from "../../client/ApiClient";
+import { handleGpgError } from "../../client/ErrorHandlers";
 import { AppViews } from "../../data/AppViews";
 
 type GenerateKeySubmitBtnProps = {
@@ -8,6 +9,7 @@ type GenerateKeySubmitBtnProps = {
   expirationDate: string;
   userId: string;
   refreshKeys: Function;
+  setErrorText: Function;
   setValidationErrors: Function;
   setView: Function;
 };
@@ -60,6 +62,7 @@ const GenerateKeySubmitBtn = ({
   expirationDate,
   userId,
   refreshKeys,
+  setErrorText,
   setValidationErrors,
   setView
 }: GenerateKeySubmitBtnProps): JSX.Element => {
@@ -75,9 +78,11 @@ const GenerateKeySubmitBtn = ({
       .then((response: Response) => response.json())
       .then((response: any) => {
         setLoading(false);
-        setView(AppViews.Keyring);
-        refreshKeys();
-      })
+        if (handleGpgError(response, setErrorText)) {
+          setView(AppViews.Keyring);
+          refreshKeys();
+        }
+      });
   };
   return (
     <Button onClick={() => clickFunc()}>{loading ? "..." : "Generate"}</Button>

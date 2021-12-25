@@ -5,6 +5,7 @@ import { AppAction } from "./Reducer";
 export const ActionNames = {
   SelectKey: "selectKey",
   SetCurrentUser: "setCurrentUser",
+  SetErrorText: "setErrorText",
   SetPrivateKeys: "setPrivateKeys",
   SetPublicKeys: "setPublicKeys",
   SetView: "setView"
@@ -24,6 +25,11 @@ export const selectKey = (
 export const setCurrentUser = (userId: string): AppAction => ({
   type: ActionNames.SetCurrentUser,
   payload: userId
+});
+
+export const setErrorText = (text: string): AppAction => ({
+  type: ActionNames.SetErrorText,
+  payload: text 
 });
 
 export const setPrivateKeys = (keys: PrivateKey[]): AppAction => ({

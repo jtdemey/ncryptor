@@ -1,5 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { executeFetch } from "../../client/ApiClient";
 
 export type SubmitBtnProps = {
   currentUser: string;
@@ -17,27 +18,12 @@ const Button = styled.div`
   border: 1px solid #52796f;
   box-shadow: -3px 3px 8px #222;
   color: #cad2c5;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 1.1rem;
   font-weight: bold;
   text-align: center;
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 `;
-
-const executeFetch = (
-  endpoint: string,
-	recipient: string | undefined,
-  text: string,
-  userId: string
-): Promise<Response> =>
-  fetch(`${window.location.href}api/${endpoint}`, {
-    method: 'post',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ recipient, text, userId })
-  });
 
 const SubmitBtn = ({
   currentUser,
@@ -50,7 +36,7 @@ const SubmitBtn = ({
   const [loading, setLoading] = React.useState(false);
   const clickFunc = () => {
     setLoading(true);
-    executeFetch(endpoint, recipient, text, currentUser)
+    executeFetch(endpoint, { recipient, text, userId: currentUser })
       .then((response: Response) => response.json())
       .then(result => {
         setLoading(false);
@@ -58,7 +44,7 @@ const SubmitBtn = ({
       });
   };
   return (
-    <Button onClick={() => clickFunc()}>{loading ? 'Loading' : label}</Button>
+    <Button onClick={() => clickFunc()}>{loading ? "Loading" : label}</Button>
   );
 };
 

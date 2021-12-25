@@ -10,6 +10,7 @@ export type AppAction = {
 type AppState = {
   currentUser: string;
   isKeyPrivate: boolean;
+  errorText: string;
   privateKeys: PrivateKey[];
   publicKeys: PublicKey[];
   selectedKey: string;
@@ -18,6 +19,7 @@ type AppState = {
 
 export const initialState: AppState = {
   currentUser: "",
+  errorText: "",
   isKeyPrivate: false,
   privateKeys: [],
   publicKeys: [],
@@ -38,6 +40,8 @@ export const reducer = (
       };
     case ActionNames.SetCurrentUser:
       return { ...state, currentUser: payload };
+    case ActionNames.SetErrorText:
+      return { ...state, errorText: payload };
     case ActionNames.SetPrivateKeys:
       return { ...state, privateKeys: payload };
     case ActionNames.SetPublicKeys:

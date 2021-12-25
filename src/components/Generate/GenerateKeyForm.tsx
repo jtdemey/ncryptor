@@ -9,9 +9,11 @@ import GenerateKeySubmitBtn from "./GenerateKeySubmitBtn";
 import { AppViews } from "../../data/AppViews";
 import { sanitizeInput } from "../../utils/StringSanitizer";
 import ValidationErrorArea from "../Form/ValidationErrorArea";
+import { executeFetch } from "../../client/ApiClient";
 
 type GenerateKeyFormProps = {
   refreshKeys: Function;
+  setErrorText: Function;
   setView: Function;
 };
 
@@ -38,15 +40,6 @@ const ds = (stringValue: string): [string, string] => [
   stringValue
 ];
 
-const executeFetch = (): Promise<Response> =>
-  fetch(`${window.location.href}api/getcurves`, {
-    method: "get",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    }
-  });
-
 const parseCurves = (curvesResponse: string): [string, string][] => {
   const curvesString = curvesResponse.split(":")[2];
   return curvesString.split(";").map((curve: string) => ds(curve.trim()));
@@ -54,6 +47,7 @@ const parseCurves = (curvesResponse: string): [string, string][] => {
 
 const GenerateKeyForm = ({
   refreshKeys,
+  setErrorText,
   setView
 }: GenerateKeyFormProps): JSX.Element => {
   const initialOptions: [string, string][] = [
@@ -69,7 +63,7 @@ const GenerateKeyForm = ({
   const [validationErrors, setValidationErrors] = React.useState(initialErrors);
   const radioSelections = ["1m", "2m", "6m", "1y", "never", "custom"];
   React.useEffect(() => {
-    executeFetch()
+    executeFetch("getcurves")
       .then((response: Response) => response.json())
       .then(result =>
         setDropdownOptions(dropdownOptions.concat(parseCurves(result.curves)))
@@ -111,6 +105,7 @@ const GenerateKeyForm = ({
           expirationDate={selectedDate}
           userId={userId}
           refreshKeys={refreshKeys}
+          setErrorText={setErrorText}
           setValidationErrors={setValidationErrors}
           setView={setView}
         />

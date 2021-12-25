@@ -21,6 +21,7 @@ type ViewRouterProps = {
   selectKey: Function;
   selectedKey: string;
   setCurrentUser: Function;
+  setErrorText: Function;
   setView: Function;
   view: AppViews;
 };
@@ -61,6 +62,7 @@ const getView = ({
   selectKey,
   selectedKey,
   setCurrentUser,
+  setErrorText,
   setView,
   view
 }: ViewRouterProps) => {
@@ -92,7 +94,13 @@ const getView = ({
         />
       );
     case AppViews.GenerateKey:
-      return <GenerateKeyView refreshKeys={refreshKeys} setView={setView} />;
+      return (
+        <GenerateKeyView
+          refreshKeys={refreshKeys}
+          setErrorText={setErrorText}
+          setView={setView}
+        />
+      );
     case AppViews.KeyDetails:
       const currentKey = isKeyPrivate
         ? privateKeys.filter(k => k.fingerprint === selectedKey)[0]
@@ -133,6 +141,7 @@ const ViewRouter = ({
   selectKey,
   selectedKey,
   setCurrentUser,
+  setErrorText,
   setView,
   view
 }: ViewRouterProps): JSX.Element => {
@@ -148,6 +157,7 @@ const ViewRouter = ({
         selectKey,
         selectedKey,
         setCurrentUser,
+        setErrorText,
         setView,
         view
       })}

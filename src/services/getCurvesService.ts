@@ -1,5 +1,7 @@
 import gpg from "gpg";
 
+const SigningOnlyCurves = ["cv25519"];
+
 export const getCurves = async (): Promise<string> => {
   return new Promise((resolve, reject) => {
     try {

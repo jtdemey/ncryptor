@@ -4,13 +4,22 @@ import GenerateKeyForm from "./GenerateKeyForm";
 
 type GenerateKeyViewProps = {
   refreshKeys: Function;
-	setView: Function;
+  setErrorText: Function;
+  setView: Function;
 };
 
-const GenerateKeyView = ({ refreshKeys, setView }: GenerateKeyViewProps): JSX.Element => (
-	<SectionCard>
-		<GenerateKeyForm refreshKeys={refreshKeys} setView={setView} />
-	</SectionCard>
+const GenerateKeyView = ({
+  refreshKeys,
+  setErrorText,
+  setView
+}: GenerateKeyViewProps): JSX.Element => (
+  <SectionCard>
+    <GenerateKeyForm
+      refreshKeys={refreshKeys}
+      setErrorText={setErrorText}
+      setView={setView}
+    />
+  </SectionCard>
 );
 
 export default GenerateKeyView;

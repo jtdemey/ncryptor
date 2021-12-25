@@ -17,19 +17,18 @@ const Container = styled.div`
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.45);
 `;
 
-let copiedInterval: any = undefined;
-
 const CopyBtn = ({ color, value }: CopyBtnProps): JSX.Element => {
   const [copied, setCopied] = React.useState(false);
-  const btnColor = color ?? "hsl(0, 0%, 5%)"
+  const btnColor = color ?? "hsl(0, 0%, 5%)";
   React.useEffect(() => {
-		if(copied) {
-			copiedInterval = setTimeout(() => {
-				setCopied(false);
-				clearInterval(copiedInterval);
-			}, 2000);
-		}
-	});
+    if (copied) {
+      const copiedInterval = setTimeout(() => {
+        setCopied(false);
+        clearInterval(copiedInterval);
+      }, 2000);
+      return () => clearTimeout(copiedInterval);
+    }
+  });
   return (
     <Container
       onClick={() => {
