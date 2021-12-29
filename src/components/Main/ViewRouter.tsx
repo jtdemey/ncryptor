@@ -25,6 +25,7 @@ type ViewRouterProps = {
   setErrorText: Function;
   setView: Function;
   view: AppViews;
+  viewRef: React.RefObject<HTMLDivElement>;
 };
 
 const View = styled.div`
@@ -66,7 +67,7 @@ const getView = ({
   setErrorText,
   setView,
   view
-}: ViewRouterProps) => {
+}: any) => {
   switch (view) {
     case AppViews.Encrypt:
       return (
@@ -107,8 +108,8 @@ const getView = ({
       );
     case AppViews.KeyDetails:
       const currentKey = isKeyPrivate
-        ? privateKeys.filter(k => k.fingerprint === selectedKey)[0]
-        : publicKeys.filter(k => k.fingerprint === selectedKey)[0];
+        ? privateKeys.filter((k: PrivateKey) => k.fingerprint === selectedKey)[0]
+        : publicKeys.filter((k: PublicKey) => k.fingerprint === selectedKey)[0];
       return (
         <KeyDetailsView
           currentKey={currentKey}
@@ -150,10 +151,11 @@ const ViewRouter = ({
   setCurrentUser,
   setErrorText,
   setView,
-  view
+  view,
+  viewRef
 }: ViewRouterProps): JSX.Element => {
   return (
-    <View>
+    <View ref={viewRef}>
       {getView({
         currentUser,
         isKeyPrivate,

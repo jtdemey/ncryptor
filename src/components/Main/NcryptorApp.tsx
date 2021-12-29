@@ -90,10 +90,15 @@ const NcryptorApp = (): JSX.Element => {
       });
   };
   React.useEffect(() => refreshContacts(), []);
+  const viewRef = React.useRef<HTMLDivElement>(null);
+  const setViewAndResetScroll = (view: AppViews) => {
+    viewRef?.current?.scrollTo({ top: 0 });
+    dispatchSetView(view);
+  };
   return (
     <Container>
       <Header />
-      <InfoBtn setView={dispatchSetView} />
+      <InfoBtn setView={setViewAndResetScroll} />
       <ErrorNotification
         setErrorText={dispatchSetError}
         text={state.errorText}
@@ -107,15 +112,16 @@ const NcryptorApp = (): JSX.Element => {
         refreshKeys={refreshPrivateKeys}
         selectKey={(fingerprint: string, isPrivate: boolean) => {
           dispatch(selectKey(fingerprint, isPrivate));
-          dispatch(setView(AppViews.KeyDetails));
+          setViewAndResetScroll(AppViews.KeyDetails);
         }}
         selectedKey={state.selectedKey}
         setCurrentUser={(userId: string) => dispatch(setCurrentUser(userId))}
         setErrorText={dispatchSetError}
-        setView={dispatchSetView}
+        setView={setViewAndResetScroll}
         view={state.view}
+        viewRef={viewRef}
       />
-      <NavBar view={state.view} setView={dispatchSetView} />
+      <NavBar view={state.view} setView={setViewAndResetScroll} />
     </Container>
   );
 };
