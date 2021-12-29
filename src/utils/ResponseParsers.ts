@@ -20,7 +20,7 @@ const parseResponseBody = (keys: string): { keys: any[]; ringPath: string } => {
     const userId = userIdLine[userIdLine.length - 1] || "unknown";
     const color = KeypairColors[keyColorIndex].value;
     keyColorIndex =
-      keyColorIndex > KeypairColors.length ? 0 : keyColorIndex + 1;
+      keyColorIndex >= KeypairColors.length - 1 ? 0 : keyColorIndex + 1;
     parsedKeys.push({
       color,
       createdDate,
@@ -36,12 +36,14 @@ const parseResponseBody = (keys: string): { keys: any[]; ringPath: string } => {
   };
 };
 
-const handleGetKeysResponse = ({
-  status,
-  keys
-}: KeysResponse): { keys: any[]; ringPath: string } => {
+const handleGetKeysResponse = (
+  { status, keys }: KeysResponse,
+  setErrorText: Function
+): { keys: any[]; ringPath: string } => {
   if (status !== 200) {
-    console.error(`Error ${status} getting private keys from keyring`);
+    const errText = `Error ${status} getting private keys from keyring`;
+    console.error(errText);
+    setErrorText(errText);
   }
   if (!keys) {
     return { ringPath: "N/A", keys: [] };
@@ -64,14 +66,14 @@ const sortKeysByUserId = (keys: PrivateKey[] | PublicKey[]): any[] =>
     return 0;
   });
 
-export const parsePrivateKeysResponse = ({
-  status,
-  keys
-}: KeysResponse): { keys: Array<PrivateKey>; ringPath: string } =>
-  handleGetKeysResponse({ status, keys });
+export const parsePrivateKeysResponse = (
+  { status, keys }: KeysResponse,
+  setErrorText: Function
+): { keys: Array<PrivateKey>; ringPath: string } =>
+  handleGetKeysResponse({ status, keys }, setErrorText);
 
-export const parsePublicKeysResponse = ({
-  status,
-  keys
-}: KeysResponse): { keys: Array<PublicKey>; ringPath: string } =>
-  handleGetKeysResponse({ status, keys });
+export const parsePublicKeysResponse = (
+  { status, keys }: KeysResponse,
+  setErrorText: Function
+): { keys: Array<PublicKey>; ringPath: string } =>
+  handleGetKeysResponse({ status, keys }, setErrorText);

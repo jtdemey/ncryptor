@@ -1,14 +1,9 @@
 import React from "react";
-import styled from 'styled-components';
-
-const View = styled.article`
-
-`;
 
 const SettingsView = (): JSX.Element => (
-	<View>
-		<h1>this be the settings view</h1>
-	</View>
+  <section>
+    <h1>This be the (currently unused) settings view</h1>
+  </section>
 );
 
 export default SettingsView;

@@ -31,12 +31,7 @@ const renderContent = (
   if (privateKeys.length < 1) {
     return <NoKeysHeader isPrivate={true} />;
   }
-  return (
-    <PrivateKeysList
-      privateKeys={privateKeys}
-      selectKey={selectKey}
-    />
-  );
+  return <PrivateKeysList privateKeys={privateKeys} selectKey={selectKey} />;
 };
 
 const KeyringView = ({
@@ -64,4 +59,3 @@ const KeyringView = ({
 };
 
 export default KeyringView;
-

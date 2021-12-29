@@ -9,11 +9,13 @@ import { AppViews } from "../../data/AppViews";
 import { PrivateKey } from "../Main/NcryptorApp";
 import ConfirmModal from "./ConfirmModal";
 import { executeFetch } from "../../client/ApiClient";
+import { handleGpgError } from "../../client/ErrorHandlers";
 
 type KeyDetailsViewProps = {
   currentKey: PrivateKey;
   isKeyPrivate: boolean;
   refreshKeys: Function;
+  setErrorText: Function;
   setView: Function;
 };
 
@@ -32,6 +34,7 @@ const KeyDetailsView = ({
   currentKey,
   isKeyPrivate,
   refreshKeys,
+  setErrorText,
   setView
 }: KeyDetailsViewProps): JSX.Element => {
   const [showingModal, setShowingModal] = React.useState(false);
@@ -48,14 +51,11 @@ const KeyDetailsView = ({
           )
             .then((response: Response) => response.json())
             .then((response: any) => {
-              console.log(response);
-              if (response.status && response.status === 400) {
-                console.error(response.text);
-                return;
-              }
               setShowingModal(false);
-              setView(isKeyPrivate ? AppViews.Keyring : AppViews.Contacts);
-              refreshKeys();
+              if (handleGpgError(response, setErrorText)) {
+                setView(isKeyPrivate ? AppViews.Keyring : AppViews.Contacts);
+                refreshKeys();
+              }
             })
         }
         fingerprint={currentKey.fingerprint}

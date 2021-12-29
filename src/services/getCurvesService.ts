@@ -13,6 +13,7 @@ export const getCurves = async (): Promise<string> => {
             console.error(error);
             reject(error);
           }
+          console.log(curves.toString())
           resolve(curves.toString());
         }
       );

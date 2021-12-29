@@ -8,8 +8,9 @@ type SectionCardProps = {
 };
 
 const Container = styled(motion.div)`
-  margin: 0 1rem;
-  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
 `;
 
 const SectionCard = ({ backgroundColor, children }: SectionCardProps): JSX.Element => (

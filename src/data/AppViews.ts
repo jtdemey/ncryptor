@@ -7,5 +7,6 @@ export enum AppViews {
 	Contacts,
 	CreateContact,
 	ContactDetails,
-	Settings
+	Settings,
+  Info
 }

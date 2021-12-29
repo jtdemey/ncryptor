@@ -10,6 +10,8 @@ import { AppViews } from "../../data/AppViews";
 import { sanitizeInput } from "../../utils/StringSanitizer";
 import ValidationErrorArea from "../Form/ValidationErrorArea";
 import { executeFetch } from "../../client/ApiClient";
+import { SignOnlyCurves } from "../../data/SignOnlyCurves";
+import { handleGpgError } from "../../client/ErrorHandlers";
 
 type GenerateKeyFormProps = {
   refreshKeys: Function;
@@ -42,7 +44,15 @@ const ds = (stringValue: string): [string, string] => [
 
 const parseCurves = (curvesResponse: string): [string, string][] => {
   const curvesString = curvesResponse.split(":")[2];
-  return curvesString.split(";").map((curve: string) => ds(curve.trim()));
+  return curvesString
+    .split(";")
+    .filter(
+      (curve: string) =>
+        !SignOnlyCurves.some(
+          (signOnlyCurve: string) => signOnlyCurve === curve.trim()
+        )
+    )
+    .map((curve: string) => ds(curve.trim()));
 };
 
 const GenerateKeyForm = ({
@@ -65,9 +75,13 @@ const GenerateKeyForm = ({
   React.useEffect(() => {
     executeFetch("getcurves")
       .then((response: Response) => response.json())
-      .then(result =>
-        setDropdownOptions(dropdownOptions.concat(parseCurves(result.curves)))
-      );
+      .then(result => {
+        if (handleGpgError(result, setErrorText)) {
+          setDropdownOptions(
+            dropdownOptions.concat(parseCurves(result.curves))
+          );
+        }
+      });
   }, []);
   return (
     <Container>

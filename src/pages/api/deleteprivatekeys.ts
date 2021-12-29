@@ -16,6 +16,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(200).json({ status: 200, response });
     })
     .catch(err => {
-      res.status(400).json({ status: 400, text: err.toString() });
+      res.status(400).json({ status: 400, text: err?.toString() });
     });
 }

@@ -8,6 +8,7 @@ import GenerateKeyView from "../Generate/GenerateKeyView";
 import ContactsView from "../Contacts/ContactsView";
 import KeyDetailsView from "../KeyDetails/KeyDetailsView";
 import AddContactView from "../AddContact/AddContactView";
+import InfoView from "../Info/InfoView";
 import { AppViews } from "../../data/AppViews";
 import { PrivateKey, PublicKey } from "./NcryptorApp";
 
@@ -96,7 +97,10 @@ const getView = ({
     case AppViews.GenerateKey:
       return (
         <GenerateKeyView
-          refreshKeys={refreshKeys}
+          refreshKeys={() => {
+            refreshKeys();
+            refreshContacts();
+          }}
           setErrorText={setErrorText}
           setView={setView}
         />
@@ -109,7 +113,8 @@ const getView = ({
         <KeyDetailsView
           currentKey={currentKey}
           isKeyPrivate={isKeyPrivate}
-          refreshKeys={refreshKeys}
+          refreshKeys={isKeyPrivate ? refreshKeys : refreshContacts}
+          setErrorText={setErrorText}
           setView={setView}
         />
       );
@@ -126,6 +131,8 @@ const getView = ({
       return <AddContactView setView={setView} />;
     case AppViews.Settings:
       return <SettingsView />;
+    case AppViews.Info:
+      return <InfoView />;
     default:
       return null;
   }

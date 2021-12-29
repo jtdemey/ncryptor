@@ -24,10 +24,14 @@ const Container = styled(motion.article)`
   font-weight: bold;
   text-align: center;
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+  word-wrap: break-word;
   z-index: 3;
 `;
 
-const ErrorNotification = ({ setErrorText, text }: ErrorNotificationProps): JSX.Element => {
+const ErrorNotification = ({
+  setErrorText,
+  text
+}: ErrorNotificationProps): JSX.Element => {
   const [visible, setVisible] = React.useState(false);
   const hasErrorText = text && text !== "";
   React.useEffect(() => {
