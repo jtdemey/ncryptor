@@ -9,7 +9,7 @@ type FileInputProps = {
 };
 
 const Container = styled.div`
-  margin: 1rem auto 0 0;
+  margin: 1rem 1rem 0 0;
 `;
 
 const Label = styled.label`
@@ -18,8 +18,7 @@ const Label = styled.label`
   border: 1px solid #cad2c5;
   border-radius: 2px;
   color: #cad2c5;
-  font-family: "Lato", sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   line-height: 1.1rem;
 `;
 
@@ -50,8 +49,8 @@ const FileInput = ({ setText }: FileInputProps): JSX.Element => {
   };
   return (
     <Container onClick={() => inputRef.current?.click()}>
-      <Label htmlFor="file-input">
-        <FontAwesomeIcon icon={faUpload} width="28px" />
+      <Label htmlFor="file-input" title="Upload text from file">
+        <FontAwesomeIcon icon={faUpload} size="lg" width={28} />
         <Input
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             changeHandler(e)

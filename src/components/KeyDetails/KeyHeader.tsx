@@ -16,6 +16,7 @@ const Container = styled.div`
   position: relative;
   color: #cad2c5;
   font-family: "Lato", sans-serif;
+  font-size: 1.25rem;
 `;
 
 const PrivacyLabel = styled(motion.span)`
@@ -55,10 +56,11 @@ const KeyHeader = ({
     <FontAwesomeIcon
       color={shiftLightness(color, 10)}
       icon={faKey}
+      size="8x"
       style={{
         transform: `rotate(-45deg) scale(-1, 1) translate(-40px, 20px)`
       }}
-      width="160px"
+      width={160}
     />
     <Text
       animate={{ opacity: [0, 1], y: [8, 0] }}

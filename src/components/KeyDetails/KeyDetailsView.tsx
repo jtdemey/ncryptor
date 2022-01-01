@@ -23,7 +23,6 @@ const Container = styled.section`
   color: #cad2c5;
   font-family: "Lato", sans-serif;
   font-size: 1.25rem;
-  overflow-y: scroll;
 `;
 
 const DetailsContainer = styled.section`

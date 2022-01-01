@@ -43,8 +43,8 @@ const GenerateKeyBtn = ({
     <SvgSpan>
       <FontAwesomeIcon
         icon={faPlus}
-        width="16px"
-        style={{ transform: "translateY(0.1rem)" }}
+        size="lg"
+        width={16}
       />
     </SvgSpan>
     <TextSpan>{text || "Generate"}</TextSpan>

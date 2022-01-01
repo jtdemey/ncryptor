@@ -1,8 +1,8 @@
-import { faKey } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { PrivateKey } from "./KeyringView";
+import { faKey } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { PrivateKey } from "../Main/NcryptorApp";
 
 type KeyringProps = {
   privateKeys: PrivateKey[];

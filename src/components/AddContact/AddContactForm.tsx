@@ -5,13 +5,18 @@ import PublicKeyInput from "./PublicKeyInput";
 import FileInput from "../Encrypt/FileInput";
 import { Container, Header, BtnBar } from "../Generate/GenerateKeyForm";
 import { AppViews } from "../../data/AppViews";
-import { sanitizeInput } from "../../utils/StringSanitizer";
 
 type AddContactFormProps = {
+  refreshContacts: Function;
+  setErrorText: Function;
   setView: Function;
 };
 
-const AddContactForm = ({ setView }: AddContactFormProps): JSX.Element => {
+const AddContactForm = ({
+  refreshContacts,
+  setErrorText,
+  setView
+}: AddContactFormProps): JSX.Element => {
   const [publicKeyText, setPublicKeyText] = React.useState("");
   return (
     <Container>
@@ -20,7 +25,13 @@ const AddContactForm = ({ setView }: AddContactFormProps): JSX.Element => {
       <PublicKeyInput setText={setPublicKeyText} text={publicKeyText} />
       <BtnBar>
         <FileInput setText={setPublicKeyText} />
-        <AddContactSubmitBtn publicKey={publicKeyText} />
+        <AddContactSubmitBtn
+          publicKey={publicKeyText}
+          refreshContacts={refreshContacts}
+          setErrorText={setErrorText}
+          setPublicKeyText={setPublicKeyText}
+          setView={setView}
+        />
       </BtnBar>
     </Container>
   );

@@ -15,6 +15,7 @@ const Container = styled.div`
   padding: 0 0.25rem 0;
   border-radius: 0.2rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.45);
+  font-size: 1.25rem;
 `;
 
 const CopyBtn = ({ color, value }: CopyBtnProps): JSX.Element => {
@@ -40,8 +41,8 @@ const CopyBtn = ({ color, value }: CopyBtnProps): JSX.Element => {
       <FontAwesomeIcon
         color={shiftLightness(btnColor, 30)}
         icon={copied ? faCheck : faCopy}
-        style={{ transform: "translateY(2px)" }}
-        width="18px"
+        size="1x"
+        width={18}
       />
     </Container>
   );

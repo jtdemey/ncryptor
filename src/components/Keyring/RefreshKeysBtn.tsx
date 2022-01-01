@@ -12,8 +12,8 @@ const RefreshKeysBtn = ({ refreshKeys }: RefreshKeysBtnProps): JSX.Element => (
     <SvgSpan>
       <FontAwesomeIcon
         icon={faRedo}
+        size="lg"
         width="16px"
-        style={{ transform: "translateY(0.1rem)" }}
       />
     </SvgSpan>
     <TextSpan>Refresh</TextSpan>

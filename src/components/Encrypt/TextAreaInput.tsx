@@ -4,6 +4,7 @@ import styled from "styled-components";
 import FileInput from "./FileInput";
 import SubmitBtn from "./SubmitBtn";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import CopyTextAreaBtn from "./CopyTextAreaBtn";
 
 type TextAreaInputProps = {
   currentUser: string;
@@ -64,6 +65,7 @@ const TextAreaInput = ({
       />
       <BtnRow>
         <FileInput setText={setText} />
+        <CopyTextAreaBtn value={text} visible={text !== ""} />
         <SubmitBtn
           currentUser={currentUser}
           endpoint={encryptMode ? "encrypt" : "decrypt"}

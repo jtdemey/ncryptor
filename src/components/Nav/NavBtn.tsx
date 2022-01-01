@@ -23,6 +23,7 @@ const Btn = styled(motion.div)`
   min-height: 3.75rem;
   box-shadow: -0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.45);
   border-radius: 50%;
+  font-size: 1.25rem;
 `;
 
 const Label = styled.h5`
@@ -56,8 +57,9 @@ const NavBtn = ({
           y: isFocused ? "-0.15rem" : "0rem"
         }}
         onClick={() => clickFunc()}
+        title={text}
       >
-        <FontAwesomeIcon icon={svgSrc} color="#CAD2C5" width="28px" />
+        <FontAwesomeIcon icon={svgSrc} color="#CAD2C5" size="lg" width={28} />
       </Btn>
       <Label style={{ fontWeight: isFocused ? "bold" : "normal" }}>{text}</Label>
     </section>

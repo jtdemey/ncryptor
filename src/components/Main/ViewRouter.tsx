@@ -108,7 +108,9 @@ const getView = ({
       );
     case AppViews.KeyDetails:
       const currentKey = isKeyPrivate
-        ? privateKeys.filter((k: PrivateKey) => k.fingerprint === selectedKey)[0]
+        ? privateKeys.filter(
+            (k: PrivateKey) => k.fingerprint === selectedKey
+          )[0]
         : publicKeys.filter((k: PublicKey) => k.fingerprint === selectedKey)[0];
       return (
         <KeyDetailsView
@@ -129,7 +131,13 @@ const getView = ({
         />
       );
     case AppViews.CreateContact:
-      return <AddContactView setView={setView} />;
+      return (
+        <AddContactView
+          refreshContacts={refreshContacts}
+          setErrorText={setErrorText}
+          setView={setView}
+        />
+      );
     case AppViews.Settings:
       return <SettingsView />;
     case AppViews.Info:

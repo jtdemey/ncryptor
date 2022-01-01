@@ -3,13 +3,23 @@ import SectionCard from "../Main/SectionCard";
 import AddContactForm from "./AddContactForm";
 
 type AddContactViewProps = {
-	setView: Function;
+  refreshContacts: Function;
+  setErrorText: Function;
+  setView: Function;
 };
 
-const AddContactView = ({ setView }: AddContactViewProps): JSX.Element => (
-	<SectionCard>
-		<AddContactForm setView={setView} />
-	</SectionCard>
+const AddContactView = ({
+  refreshContacts,
+  setErrorText,
+  setView
+}: AddContactViewProps): JSX.Element => (
+  <SectionCard>
+    <AddContactForm
+      refreshContacts={refreshContacts}
+      setErrorText={setErrorText}
+      setView={setView}
+    />
+  </SectionCard>
 );
 
 export default AddContactView;

@@ -7,7 +7,7 @@ export const handleGpgError = (
   response: GpgResponse,
   setErrorText: Function
 ): boolean => {
-  if (response.status === 400) {
+  if (response.status >= 400) {
     setErrorText(response.text);
     return false;
   }

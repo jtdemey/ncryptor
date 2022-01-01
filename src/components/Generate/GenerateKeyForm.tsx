@@ -32,9 +32,10 @@ export const Header = styled.h2`
   text-align: center;
 `;
 
-export const BtnBar = styled.h2`
+export const BtnBar = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-top: 1rem;
 `;
 
 const ds = (stringValue: string): [string, string] => [

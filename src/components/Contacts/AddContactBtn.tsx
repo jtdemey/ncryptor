@@ -17,8 +17,8 @@ const AddContactBtn = ({
     <SvgSpan>
       <FontAwesomeIcon
         icon={faPlus}
+        size="lg"
         width="16px"
-        style={{ transform: "translateY(0.1rem)" }}
       />
     </SvgSpan>
     <TextSpan>{text || "New"}</TextSpan>
