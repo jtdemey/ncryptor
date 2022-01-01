@@ -35,7 +35,7 @@ const InfoView = (): JSX.Element => {
           animate={{ opacity: [0, 1], y: [10, 0] }}
           transition={{ ease: "easeOut" }}
         >
-          Ncryptor v1.0.0
+          Ncryptor v1.0.1
           <br />
           by <a href="https://www.johntorsten.com">John Torsten</a>
           <br />© 2021

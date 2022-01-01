@@ -14,14 +14,14 @@ export const importKey = async (publicKey: string): Promise<string> => {
           suffix: ".gpg"
         },
         (err: any, fileInfo: temp.OpenFile) => {
-          if (err) throw err;
+          if (err) logError(err);
           fs.write(
             fileInfo.fd,
             publicKey,
             (err: NodeJS.ErrnoException | null) => logError(err)
           );
           fs.close(fileInfo.fd, (err: NodeJS.ErrnoException | null) => {
-            if (err) throw err;
+            if (err) logError(err);
             gpg.call(
               "",
               ["--import", fileInfo.path],
